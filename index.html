@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Roofers HQ — Operator‑Grade Dashboard (Light)</title>
-  <meta name="description" content="Roofers HQ: operator‑grade, data‑dense, client‑ready single‑file demo. 12 widgets, AI rail, drag & drop, export, and believable sample data." />
+  <title>Roofers HQ — Operator-Grade Dashboard</title>
+  <meta name="description" content="Roofers HQ: operator-grade, data-dense, client-ready single-file demo. 12 widgets, AI rail, drag & drop, export, and believable sample data." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,35 +19,55 @@
             accent: { DEFAULT:'#c1ff72' },
             amber: '#f59e0c',
             rose: '#f43f5f',
-            slateink:'#111827'
+            ink:'#0f172a'
           },
-          boxShadow: {
-            soft:'0 10px 30px rgba(2,6,23,.10), 0 2px 8px rgba(2,6,23,.06)'
-          },
-          borderRadius: { xl2:'1.25rem' }
+          boxShadow: { soft:'0 10px 30px rgba(2,6,23,.10), 0 2px 8px rgba(2,6,23,.06)' },
         }
       }
     }
   </script>
   <style>
     html,body{height:100%}
-    body{font-family:Inter,system-ui,sans-serif}
-    .card{border-radius:1rem; background:#ffffff; border:1px solid #e5e7eb}
+    body{font-family:Inter,system-ui,sans-serif; font-size:15px}
+    *{box-sizing:border-box}
+    .card{border-radius:1rem; background:#ffffff; border:1px solid #e5e7eb; overflow:hidden}
     .hoverlift{transition:transform .16s ease, box-shadow .16s ease}
     .hoverlift:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.08)}
     .pill{border-radius:9999px; padding:.25rem .6rem; font-weight:700; font-size:.72rem}
     .subtle{color:#667085}
-    .spark{width:100%; height:70px}
-    .kanban-col{min-height:140px}
-    .btn{border:1px solid #e5e7eb; background:#fff; border-radius:.6rem; padding:.5rem .75rem}
+    .spark{width:100%; height:84px}
+    .btn{border:1px solid #cbd5e1;background:#f8fafc;color:#0f172a;border-radius:.7rem;padding:.6rem .9rem;font-weight:600;line-height:1;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 1px 0 rgba(2,6,23,.04),0 1px 8px rgba(2,6,23,.04);transition:transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease}
+    .btn:hover{background:#eef2f7;border-color:#94a3b8;transform:translateY(-1px);box-shadow:0 6px 16px rgba(2,6,23,.08)}
+    .btn:active{transform:translateY(0)}
+    .btn:focus-visible{outline:2px solid #0ca6e9; outline-offset:2px}
+    .btn-lg{padding:.7rem 1rem;font-size:.95rem}
+    .btn-icon{padding:.55rem;width:2.5rem;height:2.5rem;justify-content:center}
+    .btn-outline{background:#fff;border-color:#0ca6e9;color:#0369a1}
+    .btn-ghost{background:transparent;border-color:transparent;color:#0369a1}
+    .btn-danger{background:#f43f5f;border-color:#e11d48;color:#fff}
+    .btn-primary{border-color:#0284c7;background:#0ca6e9;color:#fff;box-shadow:0 8px 20px rgba(12,166,233,.25)}
+    .btn-primary:hover{background:#0284c7;border-color:#0369a1;transform:translateY(-1px)}
+    /* Dark theme (toggle by body.dark) */
+    body.dark{ background:#092034; color:#e6eef8 }
+    body.dark header{ background:rgba(9,32,52,.92); border-color:rgba(255,255,255,.12); color:#e6eef8 }
+    body.dark .card{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.16); color:#e6eef8 }
+    body.dark .btn{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18); color:#e6eef8 }
+    body.dark .btn-primary{ background:#0ca6e9; border-color:#0ca6e9; color:#00131e }
+    body.dark .subtle{ color:#9fb3c8 }
+    body.dark .pill{ background:rgba(193,255,114,.18); color:#d9ff9d }
+    body.dark input, body.dark textarea, body.dark select{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18); color:#e6eef8 }
+    body.dark .rounded-lg.border, body.dark .border-slate-200{ border-color:rgba(255,255,255,.18)!important }
+    /* tiny rain animation for Weather Guard */
+    .rain-drop{position:absolute; width:2px; height:10px; background:#0ca6e9; opacity:.6; animation:fall 1.8s linear infinite}
+    @keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(190px); opacity:0}}
   </style>
 </head>
-<body class="bg-slate-50 text-slateink">
+<body class="bg-slate-50 text-ink">
   <!-- Top Bar -->
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
     <div class="max-w-[1400px] mx-auto px-4 h-14 flex items-center gap-3">
       <div class="flex items-center gap-3 select-none">
-        <div class="w-9 h-9 rounded-xl bg-brand grid place-items-center text-white shadow-sm">🏠</div>
+        <img src="https://picsum.photos/seed/rooflogo/56/56" alt="Logo" class="w-9 h-9 rounded-xl object-cover"/>
         <div class="leading-tight">
           <div class="font-extrabold tracking-tight text-slate-900 text-lg">Roofers HQ</div>
           <div class="text-slate-500 text-xs">Operator dashboard</div>
@@ -61,10 +81,11 @@
       </div>
       <div class="hidden md:flex items-center gap-2">
         <span class="pill bg-accent/60 text-slate-900">Voice Agent: Online</span>
-        <button id="newJobBtn" class="bg-brand hover:bg-brand-600 text-white font-semibold px-3 py-2 rounded-lg transition">+ New Job</button>
-        <button id="exportBtn" class="btn">Export</button>
-        <button class="relative btn" title="Notifications">🔔<span class="absolute -right-1 -top-1 w-2.5 h-2.5 bg-rose rounded-full ring-2 ring-white"></span></button>
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-600 grid place-items-center text-white text-xs font-extrabold">HQ</div>
+        <button id="newJobBtn" class="bg-brand hover:bg-brand-600 text-white font-semibold px-3 py-2 rounded-lg transition" onclick="navigate('jobs')">+ New Job</button>
+        <button id="exportBtn" class="btn btn-outline">Export</button>
+        <button id="themeToggle" class="btn btn-outline">Dark</button>
+        <button class="relative btn btn-icon" title="Notifications">🔔<span class="absolute -right-1 -top-1 w-2.5 h-2.5 bg-rose rounded-full ring-2 ring-white"></span></button>
+        <img src="https://picsum.photos/seed/userhq/36/36" class="w-9 h-9 rounded-xl object-cover" alt="User"/>
       </div>
     </div>
   </header>
@@ -77,7 +98,7 @@
           <span class="font-semibold">Menu</span>
           <span class="text-xs subtle">v1.0</span>
         </div>
-        <nav class="p-2 text-slate-700">
+        <nav class="p-2 text-slate-700" id="sideNav">
           <button data-view="overview" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">🏠 Overview</button>
           <button data-view="leads" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">📇 Leads</button>
           <button data-view="jobs" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">📋 Jobs</button>
@@ -92,249 +113,467 @@
         <div class="px-4 py-3 border-t border-slate-200">
           <div class="text-xs subtle">Teams on site</div>
           <div class="mt-2 flex -space-x-2">
-            <div class="w-7 h-7 rounded-full bg-emerald-500 grid place-items-center text-xs font-bold text-white">A</div>
-            <div class="w-7 h-7 rounded-full bg-brand grid place-items-center text-xs font-bold text-white">B</div>
-            <div class="w-7 h-7 rounded-full bg-amber grid place-items-center text-xs font-bold text-white">C</div>
-            <div class="w-7 h-7 rounded-full bg-rose grid place-items-center text-xs font-bold text-white">D</div>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teama/28/28"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teamb/28/28"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teamc/28/28"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teamd/28/28"/>
           </div>
         </div>
       </div>
     </aside>
 
-    <!-- Main Content (12 widgets) -->
+    <!-- Main Content -->
     <main class="space-y-6">
-      <!-- Row: KPIs (4) -->
-      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><div class="subtle text-sm">Open Jobs</div><span class="pill bg-brand/10 text-brand">+8% MoM</span></div>
-          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">12</div><div class="subtle text-sm">Avg lead time 5d</div></div>
-          <div class="mt-3 h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-brand" style="width:62%"></div></div>
-        </div>
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><div class="subtle text-sm">This Month Revenue</div><span class="pill bg-accent text-slate-900">+$12%</span></div>
-          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">$184.2k</div><div class="subtle text-sm">41 jobs</div></div>
-          <canvas id="kpiRev" class="spark mt-2"></canvas>
-        </div>
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><div class="subtle text-sm">Outstanding Estimates</div><span class="pill bg-amber/20 text-amber">5 due</span></div>
-          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">9</div><div class="subtle text-sm">Avg age 3d</div></div>
-          <canvas id="kpiEst" class="spark mt-2"></canvas>
-        </div>
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><div class="subtle text-sm">A/R</div><span class="pill bg-rose/10 text-rose">$51.7k</span></div>
-          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">$51.7k</div><div class="subtle text-sm">12 invoices</div></div>
-          <canvas id="kpiAR" class="spark mt-2"></canvas>
-        </div>
-      </section>
-
-      <!-- Row: Lead Pipeline (6 col) + AI Estimator (6 col) -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <!-- Lead Pipeline -->
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-semibold">Lead Pipeline (Today)</h3>
-            <div class="text-sm subtle">7‑day win <span class="font-bold text-slate-900">38%</span></div>
-          </div>
-          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">New</div><div class="text-2xl font-extrabold text-slate-900">27</div></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Qualified</div><div class="text-2xl font-extrabold text-slate-900">19</div></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Inspection</div><div class="text-2xl font-extrabold text-slate-900">14</div></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Quote Sent</div><div class="text-2xl font-extrabold text-slate-900">9</div></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Won</div><div class="text-2xl font-extrabold text-slate-900">11</div></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Lost</div><div class="text-2xl font-extrabold text-slate-900">5</div></div>
-          </div>
-          <div class="mt-3 flex flex-wrap gap-2 text-sm">
-            <span class="pill bg-slate-100">3 leads stalled >48h — nudge?</span>
-            <button class="btn" onclick="log('Auto‑SMS confirm to 3 stalled leads')">Auto‑SMS confirm</button>
-            <button class="btn" onclick="log('Sent 9 quotes')">Send quote</button>
-            <button class="btn" onclick="log('Voice Agent calling pipeline leads')">Call via Voice Agent</button>
-          </div>
-        </div>
-
-        <!-- AI Estimator -->
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><h3 class="font-semibold">AI Estimator</h3><div class="subtle text-xs">Runs locally; can call Hover/EagleView.</div></div>
-          <div class="mt-3 grid grid-cols-[160px_1fr] gap-3 items-start">
-            <div class="grid gap-2">
-              <div class="w-full h-[110px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Front Elevation</div>
-              <div class="w-full h-[110px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Rear Elevation</div>
-            </div>
+      <!-- ============== OVERVIEW (Landing) ============== -->
+      <section id="view-overview" class="space-y-6">
+        <!-- Row: KPIs (4, right-aligned) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="card hoverlift p-4 text-right">
+            <div class="flex items-center justify-between"><div class="subtle text-sm">Open Jobs</div><span class="pill bg-brand/10 text-brand">+8% MoM</span></div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">12</div>
             <div>
-              <div class="grid grid-cols-3 gap-2 text-sm mb-2">
-                <input class="col-span-2 rounded-md border border-slate-200 px-2 py-2" placeholder="Address e.g. 742 Evergreen Ter" />
-                <input class="rounded-md border border-slate-200 px-2 py-2" placeholder="Pitch 6/12" />
-              </div>
-              <table class="w-full text-sm border-collapse">
-                <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b border-slate-200">Item</th><th class="text-left pb-1 border-b border-slate-200">Amount</th></tr></thead>
-                <tbody id="estBody"></tbody>
-              </table>
-              <div class="flex items-center justify-between mt-2 text-sm subtle"><div>Median time: <b>1m 12s</b> • Accuracy delta: <b>3.4%</b></div><div>Total <b id="estTotal" class="text-lg text-slate-900"></b></div></div>
-              <div class="mt-2 flex flex-wrap gap-2 text-sm">
-                <button class="btn" onclick="log('Generated estimate PDF')">Generate PDF</button>
-                <button class="btn" onclick="log('Sent e‑sign link')">E‑sign</button>
-                <button class="btn" onclick="log('Opened finance options')">Finance options</button>
-              </div>
+              <div class="flex items-center justify-between text-sm mt-1"><span class="subtle">Avg lead time</span><span class="font-semibold text-slate-900">5d</span></div>
+              <div class="mt-2 h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-brand" style="width:62%"></div></div>
+            </div>
+          </div>
+          <div class="card hoverlift p-4 text-right">
+            <div class="flex items-center justify-between"><div class="subtle text-sm">This Month Revenue</div><span class="pill bg-accent text-slate-900">+12%</span></div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">$184.2k</div>
+            <div>
+              <canvas id="kpiRev" class="spark mt-1 block"></canvas>
+              <div class="flex items-center justify-end text-sm"><span>41 invoices</span></div>
+            </div>
+          </div>
+          <div class="card hoverlift p-4 text-right">
+            <div class="flex items-center justify-between"><div class="subtle text-sm">Outstanding Estimates</div><span class="pill bg-amber/20 text-amber">5 due</span></div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">9</div>
+            <div>
+              <canvas id="kpiEst" class="spark mt-1"></canvas>
+              <div class="flex items-center justify-end text-sm"><span>Avg age&nbsp;<b class="text-slate-900">3d</b></span></div>
+            </div>
+          </div>
+          <div class="card hoverlift p-4 text-right">
+            <div class="flex items-center justify-between"><div class="subtle text-sm">A/R</div><span class="pill bg-rose/10 text-rose">12 inv</span></div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">$51.7k</div>
+            <div>
+              <canvas id="kpiAR" class="spark mt-1"></canvas>
+              <div class="flex items-center justify-end text-sm"><span>Net 15</span></div>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- Row: Crew Board + POs -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <!-- Crew Scheduling Board (drag/drop) -->
-        <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><h3 class="font-semibold">Crew Scheduling (Today + 7)</h3><div class="subtle text-sm">Constraints: weather, crew capacity, materials</div></div>
-          <p class="mt-2 pill bg-amber/20 text-amber inline-block">Crew B overallocated; split to Crew D?</p>
-          <div class="mt-3 grid grid-cols-4 gap-2 text-sm">
-            <div id="col-A" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'A')"><h5 class="subtle mb-1">Crew A</h5></div>
-            <div id="col-B" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'B')"><h5 class="subtle mb-1">Crew B</h5></div>
-            <div id="col-C" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'C')"><h5 class="subtle mb-1">Crew C</h5></div>
-            <div id="col-D" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'D')"><h5 class="subtle mb-1">Crew D</h5></div>
+        <!-- Row: Lead Pipeline + AI Estimator -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="card hoverlift p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold">Lead Pipeline (Today)</h3>
+              <div class="text-sm subtle">7-day win <span class="font-bold text-slate-900">38%</span></div>
+            </div>
+            <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">New</div><div class="text-2xl font-extrabold text-slate-900">27</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Qualified</div><div class="text-2xl font-extrabold text-slate-900">19</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Inspection</div><div class="text-2xl font-extrabold text-slate-900">14</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Quote Sent</div><div class="text-2xl font-extrabold text-slate-900">9</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Won</div><div class="text-2xl font-extrabold text-slate-900">11</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Lost</div><div class="text-2xl font-extrabold text-slate-900">5</div></div>
+            </div>
+            <div class="mt-3 grid grid-cols-1 gap-2 text-sm">
+              <span class="pill bg-slate-100 text-slate-700">3 leads stalled &gt;48h — nudge?</span>
+              <button class="btn btn-primary btn-lg w-full" onclick="navigate('leads');log('Opening Leads')">Open Leads</button>
+              <button class="btn btn-outline w-full" onclick="log('Sent 9 quotes')">Send quote</button>
+              <button class="btn btn-outline w-full" onclick="log('Voice Agent calling pipeline leads')">Call via Voice Agent</button>
+            </div>
           </div>
-          <div class="mt-3 flex flex-wrap gap-2 text-sm">
-            <button class="btn" onclick="log('Auto‑texted all crews')">Auto‑text crew</button>
-            <button class="btn" onclick="log('Notified homeowners of changes')">Notify homeowner</button>
-            <button class="btn" onclick="log('Re‑routed crews to optimize travel')">Re‑route</button>
-          </div>
-        </div>
 
-        <!-- POs -->
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Material Orders & PO Automation</h3>
-          <table class="mt-2 w-full text-sm">
-            <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b border-slate-200">PO #</th><th class="text-left pb-1 border-b border-slate-200">Supplier</th><th class="text-left pb-1 border-b border-slate-200">Items</th><th class="text-left pb-1 border-b border-slate-200">Status</th></tr></thead>
-            <tbody id="poBody"></tbody>
-          </table>
-          <div class="mt-2 flex flex-wrap gap-2 text-sm"><button class="btn" onclick="log('Reordered Beacon #1042')">Reorder</button><button class="btn" onclick="log('Substituted material on #1044')">Substitute material</button><button class="btn" onclick="log('Tracking truck for ABC #1043')">Track truck</button></div>
-        </div>
-      </section>
-
-      <!-- Row: Progress + Revenue & Cash -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Job Site Progress</h3>
-          <div class="grid grid-cols-[160px_1fr] gap-3 items-center text-sm mt-2">
-            <div>
-              <div class="grid grid-cols-2 gap-2">
-                <div class="w-full h-[100px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Before</div>
-                <div class="w-full h-[100px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Underlayment</div>
+          <div class="card hoverlift p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold">AI Estimator</h3>
+              <span class="subtle text-sm">Runs locally; can call Hover/EagleView</span>
+            </div>
+            <div class="mt-3 grid grid-cols-[160px_1fr] gap-3 items-start">
+              <div class="grid gap-2">
+                <img src="https://images.unsplash.com/photo-1505843513577-22bb7d21e455?q=80&w=800&auto=format&fit=crop" alt="Roof front" class="w-full h-[110px] object-cover rounded-lg border border-slate-200">
+                <img src="https://images.unsplash.com/photo-1597004895285-58f32b9bc408?q=80&w=800&auto=format&fit=crop" alt="Roof rear" class="w-full h-[110px] object-cover rounded-lg border border-slate-200">
               </div>
-              <div class="mt-2">Alert: <b>Missing permit photo for Job #2317</b></div>
-              <div class="mt-1 flex gap-2"><button class="btn" onclick="log('Requested permit photo for #2317')">Request photo</button><button class="btn" onclick="log('QA flag added to #2317')">Flag QA</button><button class="btn" onclick="log('Change order created for #2317')">Add change order</button></div>
+              <div>
+                <div class="grid grid-cols-3 gap-2 text-sm mb-2">
+                  <input class="col-span-2 rounded-md border border-slate-200 px-2 py-2" placeholder="Address e.g. 742 Evergreen Ter" />
+                  <input class="rounded-md border border-slate-200 px-2 py-2" placeholder="Pitch 6/12" />
+                </div>
+                <table class="w-full text-sm border-collapse">
+                  <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b border-slate-200">Item</th><th class="text-left pb-1 border-b border-slate-200">Amount</th></tr></thead>
+                  <tbody>
+                    <tr><td class="py-1 border-b border-slate-100">Labor</td><td class="py-1 border-b border-slate-100">$5,200</td></tr>
+                    <tr><td class="py-1 border-b border-slate-100">Materials</td><td class="py-1 border-b border-slate-100">$6,100</td></tr>
+                    <tr><td class="py-1 border-b border-slate-100">Disposal</td><td class="py-1 border-b border-slate-100">$480</td></tr>
+                    <tr><td class="py-1 border-b border-slate-100">Overhead &amp; Margin</td><td class="py-1 border-b border-slate-100">$700</td></tr>
+                  </tbody>
+                </table>
+                <div class="flex flex-wrap justify-between mt-2 text-sm">
+                  <div class="subtle">Median time: <b>1m 12s</b> • Accuracy delta: <b>3.4%</b></div>
+                  <div>Total <b class="text-xl font-extrabold">$12,480</b></div>
+                </div>
+                <div class="mt-2 flex flex-wrap gap-2 text-sm">
+                  <button class="btn btn-outline" onclick="openModal('Estimate PDF','<p>Placeholder PDF preview.</p>')">Generate PDF</button>
+                  <button class="btn btn-outline" onclick="log('E-sign sent')">E‑sign</button>
+                  <button class="btn btn-outline" onclick="log('Finance options opened')">Finance options</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row: Crew Scheduling (full row) -->
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Crew Scheduling (Today + 7)</h3><div class="subtle text-sm">Constraints: weather • crew capacity • material arrival</div></div>
+          <p class="mt-2 text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-2 py-1 inline-block text-sm">Crew B overallocated; split to Crew D?</p>
+          <div class="mt-3 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 text-sm">
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-CrewA"><div class="subtle mb-1">Crew A</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-CrewB"><div class="subtle mb-1">Crew B</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-CrewC"><div class="subtle mb-1">Crew C</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-CrewD"><div class="subtle mb-1">Crew D</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-Thu"><div class="subtle mb-1">Thu</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-Fri"><div class="subtle mb-1">Fri</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-Sat"><div class="subtle mb-1">Sat</div></div>
+            <div class="rounded-lg border border-slate-200 p-2 min-h-[120px]" id="col-Sun"><div class="subtle mb-1">Sun</div></div>
+          </div>
+          <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <button class="btn btn-primary btn-lg" onclick="log('Auto-texted all crews')">Auto‑text crew</button>
+            <button class="btn btn-outline" onclick="log('Notified homeowners of changes')">Notify homeowner</button>
+            <button class="btn btn-outline" onclick="log('Re-routed crews to optimize travel')">Re‑route</button>
+          </div>
+        </div>
+
+        <!-- Row: POs (full row) -->
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Material Orders &amp; PO Automation</h3>
+          <div class="overflow-x-auto">
+            <table class="mt-2 w-full text-sm">
+              <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b border-slate-200">PO #</th><th class="text-left pb-1 border-b border-slate-200">Supplier</th><th class="text-left pb-1 border-b border-slate-200">Items</th><th class="text-left pb-1 border-b border-slate-200">Status</th></tr></thead>
+              <tbody id="poBody"></tbody>
+            </table>
+          </div>
+          <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <button class="btn btn-outline w-full" onclick="log('Reordered Beacon #1042')">Reorder</button>
+            <button class="btn btn-outline w-full" onclick="log('Substituted material on #1044')">Substitute material</button>
+            <button class="btn btn-outline w-full" onclick="navigate('materials')">Track truck</button>
+          </div>
+        </div>
+
+        <!-- Row: Job Site Progress (full row) -->
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Job Site Progress</h3><div class="subtle text-sm">Photo timeline • Safety checklist • Change orders</div></div>
+          <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-3 items-start mt-2 text-sm">
+            <div class="relative w-full h-56 rounded-lg border border-slate-200 overflow-hidden">
+              <img id="jsPhoto" src="https://images.unsplash.com/photo-1568117846303-4c7d1c1a58fb?q=80&w=1200&auto=format&fit=crop" alt="Job site roof" class="w-full h-full object-cover">
+              <button id="jsPrev" class="absolute left-2 top-1/2 -translate-y-1/2 btn btn-icon">◀</button>
+              <button id="jsNext" class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-icon">▶</button>
             </div>
             <div>
               <div class="subtle">AI % complete</div>
-              <div class="text-2xl font-extrabold text-slate-900">64%</div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden mt-1"><span style="width:64%" class="block h-full bg-gradient-to-r from-brand to-emerald-500"></span></div>
+              <div class="text-2xl font-extrabold text-slate-900" id="jsPct">64%</div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden mt-1"><span id="jsBar" style="width:64%" class="block h-full bg-gradient-to-r from-brand to-emerald-500"></span></div>
+              <ul class="mt-3 list-disc pl-5 text-slate-600">
+                <li>Alert: <b>Missing permit photo for Job #2317</b></li>
+                <li>Safety checklist: 8/10 complete</li>
+                <li>Next inspection: Wed 2:30pm</li>
+              </ul>
+              <div class="mt-2 flex flex-wrap gap-2">
+                <button class="btn btn-primary btn-lg" onclick="log('Requested permit photo for #2317')">Request photo</button>
+                <button class="btn btn-outline" onclick="log('QA flag added to #2317')">Flag QA</button>
+                <button class="btn btn-outline" onclick="log('Change order created for #2317')">Add change order</button>
+              </div>
+              <div class="mt-2 text-xs subtle">Tip: Swipe or use ◀ ▶ to review timeline. Require “permit” photo before progress can exceed 10%.</div>
             </div>
           </div>
         </div>
 
+        <!-- Row: Revenue & Cash (full row) -->
         <div class="card hoverlift p-4">
-          <div class="flex items-center justify-between"><h3 class="font-semibold">Revenue & Cash</h3><div class="subtle">This Month</div></div>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-2">
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Booked</div><div class="text-2xl font-extrabold text-slate-900">$184,200</div><canvas id="rv1" class="spark mt-1"></canvas></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Collected</div><div class="text-2xl font-extrabold text-slate-900">$132,480</div><canvas id="rv2" class="spark mt-1"></canvas></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">A/R</div><div class="text-2xl font-extrabold text-slate-900">$51,720</div><canvas id="rv3" class="spark mt-1"></canvas></div>
-            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Avg Ticket</div><div class="text-2xl font-extrabold text-slate-900">$12,480</div><canvas id="rv4" class="spark mt-1"></canvas></div>
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Revenue &amp; Cash</h3><div class="subtle">This Month</div></div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-2 items-start">
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Booked</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$184,200</div><canvas id="rv1" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Collected</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$132,480</div><canvas id="rv2" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">A/R</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$51,720</div><canvas id="rv3" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Avg Ticket</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$12,480</div><canvas id="rv4" class="spark mt-2 block"></canvas></div>
           </div>
-          <div class="mt-2 subtle text-sm">Win rate (30D): <b>41%</b></div>
-          <div class="mt-2 flex flex-wrap gap-2 text-sm"><button class="btn" onclick="log('Sent invoice batch')">Send invoice</button><button class="btn" onclick="log('Chasing A/R $51,720')">Chase A/R</button><button class="btn" onclick="log('Applied financing to open invoices')">Apply financing</button></div>
+          <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <button class="btn btn-primary btn-lg" onclick="navigate('invoices')">Send invoice</button>
+            <button class="btn btn-outline" onclick="log('Chasing A/R $51,720')">Chase A/R</button>
+            <button class="btn btn-outline" onclick="log('Applied financing to open invoices')">Apply financing</button>
+          </div>
         </div>
-      </section>
 
-      <!-- Row: Comms + Voice + Weather + Compliance + Marketing + Insights -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        <!-- Row: Active Conversations (full) -->
         <div class="card hoverlift p-4" id="comms">
-          <div class="flex items-center justify-between"><h3 class="font-semibold">Customer Comms Hub</h3><div class="subtle">SMS / Email / Phone</div></div>
-          <div class="mt-2 grid grid-cols-[180px_1fr] gap-3">
-            <div class="rounded-lg border border-slate-200 max-h-48 overflow-auto">
-              <a href="#" class="block px-3 py-2 border-b border-slate-200" onclick="setThread(1);return false;">Lisa Collins — SMS</a>
-              <a href="#" class="block px-3 py-2 border-b border-slate-200" onclick="setThread(2);return false;">Matt Riley — Email</a>
-              <a href="#" class="block px-3 py-2" onclick="setThread(3);return false;">Brandon Mitchell — Phone</a>
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Active Conversations</h3><div class="subtle">SMS / Email / Phone</div></div>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-[300px_1fr] gap-4">
+            <div class="rounded-lg border border-slate-200 max-h-72 overflow-auto">
+              <a href="#" class="block px-3 py-2 border-b border-slate-200 hover:bg-slate-50" onclick="setThread(1);return false;">Lisa Collins <span class="pill bg-brand/10 text-brand ml-2">SMS</span></a>
+              <a href="#" class="block px-3 py-2 border-b border-slate-200 hover:bg-slate-50" onclick="setThread(2);return false;">Matt Riley <span class="pill bg-amber/20 text-amber ml-2">Email</span></a>
+              <a href="#" class="block px-3 py-2 hover:bg-slate-50" onclick="setThread(3);return false;">Brandon Mitchell <span class="pill bg-emerald-100 text-emerald-700 ml-2">Phone</span></a>
             </div>
             <div>
-              <div id="thread" class="rounded-lg border border-slate-200 p-2 max-h-48 overflow-auto bg-slate-50"></div>
-              <div class="mt-2 flex flex-wrap gap-2 text-sm">
-                <button class="btn" onclick="log('Smart prompt: Approve day‑of schedule?')">Approve day‑of schedule? Y/N</button>
-                <button class="btn" onclick="log('Triggered no‑show recovery sequence')">No‑show recovery</button>
-                <button class="btn" onclick="log('Requested post‑install review')">Post‑install review</button>
+              <div id="thread" class="rounded-lg border border-slate-200 p-3 max-h-80 overflow-auto bg-slate-50"></div>
+              <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                <button class="btn btn-outline w-full" onclick="log('Smart prompt: Approve day-of schedule?')">Approve day-of schedule? Y/N</button>
+                <button class="btn btn-outline w-full" onclick="log('Triggered no-show recovery sequence')">No-show recovery</button>
+                <button class="btn btn-outline w-full" onclick="log('Requested post-install review')">Post-install review</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Voice AI Setter / Receptionist</h3>
-          <div class="grid grid-cols-[140px_1fr] gap-3 items-start mt-2">
-            <div class="rounded-lg border border-slate-200 bg-slate-50 h-[90px] grid place-items-center text-slate-500 text-sm">Waveform</div>
-            <div>
-              <div id="transcript" class="h-[90px] rounded-lg border border-slate-200 p-2 overflow-auto bg-slate-50 text-sm"></div>
-              <div class="mt-2 flex items-center gap-3 text-sm"><label><input type="checkbox" checked/> After‑hours</label><label><input type="checkbox"/> Spanish</label><label><input type="checkbox"/> Escalate</label></div>
-              <div class="mt-2 flex gap-2 text-sm"><button class="btn" onclick="log('Listen live')">Listen live</button><button class="btn" onclick="log('Whisper coach ON')">Whisper coach</button><button class="btn" onclick="log('Transferred to closer')">Transfer</button></div>
+        <!-- Row: Voice AI (full) -->
+        <div class="card hoverlift p-4" id="voiceAI">
+          <div class="flex items-center justify-between">
+            <h3 class="font-semibold">Voice AI Setter / Receptionist</h3>
+            <span id="vaiStatus" class="pill bg-emerald-100 text-emerald-700">Idle</span>
+          </div>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-lg border border-slate-200 p-3">
+              <div class="font-semibold mb-2">Setter</div>
+              <div class="grid grid-cols-[1fr_auto] gap-y-2 text-sm">
+                <div class="subtle">Calls received (today)</div><div class="font-bold">24</div>
+                <div class="subtle">Avg. call duration</div><div>3m 42s</div>
+                <div class="subtle">First response time</div><div>6s</div>
+                <div class="subtle">Verified appointments</div><div class="font-bold">21</div>
+                <div class="subtle">Booked inspection</div><div>12</div>
+                <div class="subtle">Booked job</div><div>9</div>
+              </div>
+            </div>
+            <div class="rounded-lg border border-slate-200 p-3">
+              <div class="font-semibold mb-2">Receptionist</div>
+              <div class="grid grid-cols-[1fr_auto] gap-y-2 text-sm">
+                <div class="subtle">Calls received (today)</div><div class="font-bold">12</div>
+                <div class="subtle">Avg. call duration</div><div>2m 57s</div>
+                <div class="subtle">First response time</div><div>9s</div>
+                <div class="subtle">Verified appointments</div><div class="font-bold">7</div>
+                <div class="subtle">Booked inspection</div><div>4</div>
+                <div class="subtle">Booked job</div><div>3</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <button id="listenBtn" class="btn btn-primary btn-lg w-full" onclick="toggleLivePanel()">Listen live</button>
+          </div>
+          <div id="vaiPanel" class="mt-3 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-3 items-start">
+              <div class="rounded-lg border border-slate-200 bg-slate-50 h-[100px] grid place-items-center text-slate-500 text-sm">Waveform</div>
+              <div>
+                <div id="transcript" class="h-[100px] rounded-lg border border-slate-200 p-2 overflow-auto bg-slate-50 text-sm"></div>
+                <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <label class="flex items-center gap-2"><input id="afterHours" type="checkbox" checked> <span class="text-sm">After-hours</span></label>
+                  <label class="flex items-center gap-2"><input id="spanish" type="checkbox"> <span class="text-sm">Spanish</span></label>
+                  <label class="flex items-center gap-2"><input id="escalate" type="checkbox"> <span class="text-sm">Escalate</span></label>
+                </div>
+                <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div class="flex items-center gap-2 col-span-2">
+                    <input id="whisperInput" class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Whisper coach: tell the AI what to say…">
+                    <button class="btn btn-outline" onclick="sendWhisper()">Send</button>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <select id="transferTo" class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm"></select>
+                    <button class="btn btn-outline" onclick="transferCall()">Transfer</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Weather Guard</h3>
-          <div class="grid grid-cols-[1fr_200px] gap-3 items-center mt-2">
-            <canvas id="weather" class="spark"></canvas>
+        <!-- Weather Guard (animated) -->
+        <div class="card hoverlift p-4" id="weatherGuard">
+          <div class="flex items-center justify-between">
+            <h3 class="font-semibold">Weather Guard</h3>
+            <div class="flex items-center gap-2 text-sm">
+              <button class="btn btn-outline" onclick="navigate('calendar')">View Calendar</button>
+              <button class="btn btn-primary" onclick="openModal('Active Jobs Overlay', '<div>Placeholder map/overlay of 7 active jobs with weather badges.</div>')">Jobs Overlay</button>
+            </div>
+          </div>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-3 items-stretch">
+            <div class="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 h-[180px]">
+              <canvas id="weather" class="absolute inset-0 w-full h-full"></canvas>
+              <div id="raindrops"></div>
+            </div>
             <div class="space-y-2 text-sm">
-              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-1"><span>Thu • Thunderstorms</span><span class="pill bg-amber/20 text-amber">⚡ 60%</span></div>
-              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-1"><span>Sat • High winds</span><span class="pill bg-slate-100">💨 28mph</span></div>
-              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-1"><span>Rule: wind >25mph → auto‑reschedule</span><span class="pill bg-emerald-100 text-emerald-700">ON</span></div>
-              <div class="flex gap-2"><button class="btn" onclick="log('Bulk rescheduled weather‑affected jobs')">Bulk reschedule</button><button class="btn" onclick="log('Notified homeowners re: weather')">Notify homeowners</button></div>
+              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-2"><span>Thu • Thunderstorms</span><span class="pill bg-amber/20 text-amber">⚡ 60%</span></div>
+              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-2"><span>Sat • High winds</span><span class="pill bg-slate-100">💨 28mph</span></div>
+              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-2"><span>Rule: wind &gt;25mph → auto‑reschedule</span><span class="pill bg-emerald-100 text-emerald-700">ON</span></div>
+              <div class="grid grid-cols-2 gap-2"><button class="btn btn-primary w-full" onclick="log('Bulk reschedule wind>25 rule')">Bulk reschedule</button><button class="btn btn-outline w-full" onclick="log('Notify homeowners: weather changes')">Notify homeowners</button></div>
             </div>
           </div>
         </div>
 
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Compliance & Permits</h3>
-          <div class="mt-2 grid grid-cols-2 gap-2 text-sm">
-            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> City permit — PO‑3215</label>
-            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1"><input type="checkbox"/> HOA approval — Miller</label>
-            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> Insurance cert on file</label>
-            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-amber-50"><input type="checkbox"/> Crew safety briefing complete</label>
-            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> Dumpster scheduled</label>
-            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1"><input type="checkbox"/> Utility lines marked</label>
+        <!-- Compliance / Marketing / Insights (full rows on xl) -->
+        <div class="grid grid-cols-12 gap-4">
+          <div class="card hoverlift p-4 xl:col-span-12 col-span-12">
+            <h3 class="font-semibold">Compliance &amp; Permits</h3>
+            <div class="mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 text-sm">
+              <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> City permit — PO-3215</label>
+              <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1"><input type="checkbox"/> HOA approval — Miller</label>
+              <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> Insurance cert on file</label>
+              <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-amber-50"><input type="checkbox"/> Crew safety briefing complete</label>
+              <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> Dumpster scheduled</label>
+              <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1"><input type="checkbox"/> Utility lines marked</label>
+            </div>
+            <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm"><button class="btn btn-primary btn-lg w-full" onclick="log('Filed permit for Dallas')">File permit</button><button class="btn btn-outline w-full" onclick="log('Attached docs to Job #2317')">Attach docs</button><button class="btn btn-outline w-full" onclick="log('Requested inspection for Job #2317')">Request inspection</button></div>
           </div>
-          <div class="mt-2 flex gap-2 text-sm"><button class="btn" onclick="log('Filed permit for Dallas')">File permit</button><button class="btn" onclick="log('Attached docs to Job #2317')">Attach docs</button><button class="btn" onclick="log('Requested inspection for Job #2317')">Request inspection</button></div>
-        </div>
-
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Marketing & Referrals</h3>
-          <div class="grid grid-cols-2 gap-3 items-center mt-2">
-            <canvas id="mkt" class="spark"></canvas>
-            <div class="text-sm">
-              <div class="flex flex-wrap gap-2"><span class="pill bg-slate-100">Google Ads CPL <b>$82</b></span><span class="pill bg-slate-100">Meta CPL <b>$57</b></span><span class="pill bg-accent">Referrals CPL <b>$18</b></span></div>
-              <ul class="list-disc ml-4 mt-2 text-slate-600"><li>Top referrer: <b>Garcia Realty</b> (4 jobs, $53k)</li><li>LSAs driving 38% of booked calls</li></ul>
-              <div class="mt-2 flex gap-2"><button class="btn" onclick="log('Spun up ads — $1500')">Spin up ads</button><button class="btn" onclick="log('Launched referral SMS to 120 contacts')">Launch referral SMS</button><button class="btn" onclick="log('Generated yard sign QR')">Generate yard sign QR</button></div>
+          <div class="card hoverlift p-4 xl:col-span-12 col-span-12">
+            <h3 class="font-semibold">Marketing &amp; Referrals</h3>
+            <div class="grid grid-cols-2 gap-3 items-center mt-2">
+              <canvas id="mkt" class="spark"></canvas>
+              <div class="text-sm">
+                <div class="flex flex-wrap gap-2"><span class="pill bg-slate-100">Google Ads CPL <b>$82</b></span><span class="pill bg-slate-100">Meta CPL <b>$57</b></span><span class="pill bg-accent">Referrals CPL <b>$18</b></span></div>
+                <ul class="list-disc ml-4 mt-2 text-slate-600"><li>Top referrer: <b>Garcia Realty</b> (4 jobs, $53k)</li><li>LSAs driving 38% of booked calls</li></ul>
+                <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"><button class="btn btn-primary btn-lg w-full" onclick="log('Spun up ads — $1500')">Spin up ads</button><button class="btn btn-outline w-full" onclick="log('Launched referral SMS to 120 contacts')">Launch referral SMS</button><button class="btn btn-outline w-full" onclick="log('Generated yard sign QR')">Generate yard sign QR</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="card hoverlift p-4 xl:col-span-12 col-span-12">
+            <h3 class="font-semibold">Analytics &amp; Insights</h3>
+            <div class="p-4 rounded-lg border border-blue-100 bg-blue-50 text-slate-800 text-sm">
+              <div class="font-semibold mb-1">Actionable Insights</div>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Raise 3-tab price by <b>$0.18/sq ft</b> → est. <b>+$4.6k/mo</b> margin.</li>
+                <li>AR &gt; 30 days: <b>3 invoices</b> → launch smart chase now.</li>
+                <li>Estimator variance trending <b>3.4%</b> → add photo requirement on steep pitches.</li>
+                <li>Weather: Thu winds 28mph → auto-reschedule 2 installs.</li>
+              </ul>
+              <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button class="btn btn-primary w-full" onclick="log('Adjusted pricing +$0.18/sq ft')">Adjust pricing</button>
+                <button class="btn btn-outline w-full" onclick="log('Started AR smart chase')">Chase AR</button>
+                <button class="btn btn-outline w-full" onclick="log('Applied weather reschedule rule')">Reschedule for weather</button>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="card hoverlift p-4">
-          <h3 class="font-semibold">Analytics & Insights</h3>
-          <div class="p-3 rounded-lg border border-brand/20 bg-brand/5 text-sm">Recommendation: Raising <b>3‑tab price $0.18/sq ft</b> increases margin <b>+$4.6k/mo</b>.</div>
-          <ul class="mt-2 grid grid-cols-2 gap-2 text-sm text-slate-600"><li>Time‑to‑first‑touch</li><li>Days in stage</li><li>Estimator accuracy</li><li>Crew productivity</li></ul>
+      <!-- ============== LEADS PAGE ============== -->
+      <section id="view-leads" class="hidden space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-lg">Leads</h2>
+          <div class="flex gap-2">
+            <input id="leadSearch" placeholder="Search leads…" class="border border-slate-200 rounded-lg px-3 py-2">
+            <select id="leadStage" class="border border-slate-200 rounded-lg px-3 py-2">
+              <option value="all">All Stages</option>
+              <option>New</option>
+              <option>Qualified</option>
+              <option>Inspection</option>
+              <option>Quote Sent</option>
+              <option>Won</option>
+              <option>Lost</option>
+            </select>
+            <button class="btn btn-primary" onclick="log('Lead imported via CSV')">Import CSV</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <div class="card p-4"><div class="font-semibold mb-2">Stage Breakdown</div><canvas id="leadChart" class="spark"></canvas></div>
+          <div class="lg:col-span-3 card p-4">
+            <div class="overflow-x-auto"><table class="min-w-full text-sm">
+              <thead class="text-slate-500 border-b"><tr><th class="text-left p-2">Lead</th><th class="text-left p-2">Contact</th><th class="text-left p-2">Source</th><th class="text-left p-2">Stage</th><th class="text-right p-2">Value</th><th class="text-right p-2">Actions</th></tr></thead>
+              <tbody id="leadBody" class="divide-y"></tbody>
+            </table></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== JOBS PAGE ============== -->
+      <section id="view-jobs" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Jobs</h2>
+          <div class="flex items-center gap-2"><select id="jobsFilter" class="bg-white border border-slate-200 rounded-lg px-3 py-2">
+            <option value="all">All Status</option><option value="scheduled">Scheduled</option><option value="in-progress">In Progress</option><option value="completed">Completed</option><option value="issue">Issue</option>
+          </select><input id="jobsSearch" placeholder="Search by address/client" class="bg-white border border-slate-200 rounded-lg px-3 py-2"></div></div>
+        <div class="overflow-hidden rounded-xl border border-slate-200"><div class="overflow-x-auto"><table class="min-w-full">
+          <thead class="bg-slate-50 text-slate-600"><tr><th class="text-left font-medium px-4 py-3">Job</th><th class="text-left font-medium px-4 py-3">Client</th><th class="text-left font-medium px-4 py-3">Type</th><th class="text-left font-medium px-4 py-3">Scheduled</th><th class="text-left font-medium px-4 py-3">Team</th><th class="text-left font-medium px-4 py-3">Status</th><th class="text-right font-medium px-4 py-3">Actions</th></tr></thead>
+          <tbody id="jobsBody" class="divide-y"></tbody></table></div></div>
+      </section>
+
+      <!-- ============== CALENDAR PAGE ============== -->
+      <section id="view-calendar" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Calendar</h2>
+          <div class="flex items-center gap-2"><button id="prevMonth" class="btn btn-outline">Prev</button><div id="calLabel" class="font-semibold"></div><button id="nextMonth" class="btn btn-outline">Next</button></div></div>
+        <div id="calendarGrid" class="grid grid-cols-7 gap-2"></div>
+      </section>
+
+      <!-- ============== CREWS PAGE ============== -->
+      <section id="view-crews" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Crews</h2><button class="btn btn-primary" onclick="log('Created new crew')">+ New Crew</button></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="crewCards"></div>
+      </section>
+
+      <!-- ============== MATERIALS PAGE ============== -->
+      <section id="view-materials" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Materials &amp; POs</h2><button class="btn btn-primary" onclick="log('Created purchase order')">+ New PO</button></div>
+        <div class="card p-4"><table class="w-full text-sm"><thead class="text-slate-500 border-b"><tr><th class="text-left p-2">PO #</th><th class="text-left p-2">Supplier</th><th class="text-left p-2">Items</th><th class="text-left p-2">Status</th><th class="text-right p-2">Actions</th></tr></thead><tbody id="poFull" class="divide-y"></tbody></table></div>
+      </section>
+
+      <!-- ============== INVOICES PAGE ============== -->
+      <section id="view-invoices" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Invoices</h2><button class="btn btn-primary" onclick="log('Created invoice')">+ New Invoice</button></div>
+        <div id="invoiceList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- ============== AUTOMATIONS PAGE ============== -->
+      <section id="view-automations" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Automations</h2><button class="btn btn-primary" onclick="log('Added automation')">+ New Rule</button></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="autoRules"></div>
+      </section>
+
+      <!-- ============== ANALYTICS PAGE ============== -->
+      <section id="view-analytics" class="hidden space-y-4">
+        <div class="flex items-center justify-between"><h2 class="font-semibold text-lg">Analytics</h2><button class="btn btn-outline" onclick="log('Exported analytics PDF')">Export PDF</button></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="card p-4"><div class="font-semibold mb-2">Revenue by Type</div><div id="chartRevenue" class="space-y-3"></div></div>
+          <div class="card p-4"><div class="font-semibold mb-2">Close Rate</div><div id="chartClose" class="space-y-3"></div></div>
+        </div>
+      </section>
+
+      <!-- ============== SETTINGS PAGE ============== -->
+      <section id="view-settings" class="hidden space-y-4">
+        <h2 class="font-semibold text-lg">Settings</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="card p-4">
+            <div class="font-semibold mb-3">Company Profile</div>
+            <div class="space-y-3">
+              <input id="companyName" placeholder="Company Name" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2">
+              <input id="companyPhone" placeholder="Phone" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2">
+              <input id="companyAddress" placeholder="Address" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2">
+              <button id="saveCompany" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+          <div class="card p-4">
+            <div class="font-semibold mb-3">Team</div>
+            <div id="teamList" class="space-y-3"></div>
+            <div class="mt-3 flex gap-2"><input id="newMemberInput" placeholder="Add team member" class="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2"><button id="addMemberBtn" class="btn btn-primary">Add</button></div>
+          </div>
         </div>
       </section>
     </main>
 
-    <!-- Right Rail: AI Project Foreman -->
+    <!-- Right Rail: ROOFER AI -->
     <aside class="hidden xl:block space-y-4">
       <div class="card p-4">
-        <div class="flex items-center justify-between"><h3 class="font-semibold">AI Project Foreman</h3><span class="pill bg-emerald-100 text-emerald-700">Online</span></div>
-        <div id="chips" class="mt-2 space-y-2 text-sm"></div>
+        <div class="flex items-center justify-between"><h3 class="font-semibold">ROOFER AI</h3><span class="pill bg-emerald-100 text-emerald-700">Online</span></div>
+        <div id="chips" class="mt-3 grid grid-cols-1 gap-2 text-sm"></div>
         <div class="mt-3 border-t pt-3">
           <div class="text-xs subtle mb-1">Chat</div>
           <div class="rounded-lg border border-slate-200 h-40 p-2 overflow-auto bg-slate-50 text-sm" id="chatBox"></div>
-          <div class="mt-2 flex gap-2"><input id="chatInput" class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ask the foreman…"><button class="bg-brand hover:bg-brand-600 text-white px-3 py-2 rounded-lg text-sm" onclick="sendChat()">Send</button></div>
+          <div class="mt-2 flex gap-2"><input id="chatInput" class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ask Roofer AI…"><button class="bg-brand hover:bg-brand-600 text-white px-3 py-2 rounded-lg text-sm" onclick="sendChat()">Send</button></div>
         </div>
       </div>
       <div class="card p-4 text-xs text-slate-600">Private/local agents • Optional APIs: Google Calendar, Twilio, QuickBooks, Hover/EagleView, OpenWeather, Stripe.</div>
     </aside>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="hidden fixed inset-0 z-50 items-center justify-center">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative w-full max-w-2xl card p-5">
+      <div class="flex items-center justify-between mb-2"><div id="modalTitle" class="font-semibold text-lg"></div><button class="btn btn-ghost" onclick="closeModal()">✕</button></div>
+      <div id="modalBody" class="text-sm"></div>
+    </div>
   </div>
 
   <!-- Toast -->
@@ -342,54 +581,299 @@
 
   <script>
     // ======== Sample State ========
-    const estItems=[{item:'Labor',amount:5200},{item:'Materials',amount:6100},{item:'Disposal',amount:480},{item:'Overhead & Margin',amount:700}];
-    const poRows=[{id:'#1042',supplier:'Beacon',items:'Owens Corning Duration – Sierra Gray',status:'Delivered'},{id:'#1043',supplier:'ABC Supply',items:'Underlayment, Nails',status:'Ordered'},{id:'#1044',supplier:'Beacon',items:'Ridge Cap – Charcoal',status:'Backordered'}];
-    const crews={A:[{id:'j1',title:'James — 25 Elm',meta:'Reshingle • 24 sq'},{id:'j2',title:'Perez — 9 Maple',meta:'Repair • 12 sq'}],B:[{id:'j3',title:'Nguyen — 14 Cedar',meta:'Tear‑off • 22 sq'}],C:[],D:[]};
+    const state = {
+      jobs: [
+        { id: 'J-1021', address: '125 King St', client: 'Morgan Lee', type: 'Repair', date: '2025-08-15', team: 'Crew A', status: 'Scheduled', phone: '555-9102' },
+        { id: 'J-1022', address: '42 Maple Ave', client: 'Jamie Fox', type: 'Inspection', date: '2025-08-15', team: 'Crew B', status: 'In Progress', phone: '555-8732' },
+        { id: 'J-1023', address: '9 Cedar Ct', client: 'Alex Kim', type: 'Installation', date: '2025-08-16', team: 'Crew C', status: 'Completed', phone: '555-4412' },
+        { id: 'J-1024', address: '88 Pine Rd', client: 'Taylor Ray', type: 'Gutter', date: '2025-08-16', team: 'Crew A', status: 'Issue', phone: '555-6611' },
+      ],
+      pipeline: {
+        leads: [
+          { id: 'L-2001', title: 'Leak @ 12 Birch', value: 850, contact: 'Nina', tag:'Lead' },
+          { id: 'L-2002', title: 'Shingles @ 5 Oak', value: 2400, contact: 'Chris', tag:'Lead' },
+        ],
+        estimating: [ { id: 'E-3001', title: 'Re-Roof @ 9 Cedar', value: 12100, contact: 'Alex', tag:'Estimate' } ],
+        scheduled: [ { id: 'S-4001', title: 'Repair @ 125 King', value: 980, contact: 'Morgan', tag:'Scheduled' } ],
+        completed: [ { id: 'C-5001', title: 'Gutter @ 41 Hill', value: 650, contact: 'Drew', tag:'Won' } ]
+      },
+      activities: [
+        { t: 'Created estimate for 9 Cedar', time: '2h ago' },
+        { t: 'Crew B checked in at 42 Maple', time: '3h ago' },
+        { t: 'Invoice #INV-212 sent to Morgan', time: 'Yesterday' },
+      ],
+      schedule: [
+        { time: '09:00', title: 'Inspection — 42 Maple', team:'Crew B', badge:'Info' },
+        { time: '10:00', title: 'Repair — 125 King', team:'Crew A', badge:'Work' },
+        { time: '14:00', title: 'Install — 9 Cedar', team:'Crew C', badge:'Install' },
+      ],
+      estimates:[
+        { id:'EST-141', client:'Alex Kim', amount: 12100, status:'Sent', due:'Aug 20' },
+        { id:'EST-142', client:'Morgan Lee', amount: 980, status:'Draft', due:'Aug 18' },
+      ],
+      invoices:[
+        { id:'INV-211', client:'Morgan Lee', amount: 980, status:'Unpaid', due:'Aug 25' },
+        { id:'INV-212', client:'Alex Kim', amount: 3500, status:'Paid', due:'Aug 10' },
+      ],
+      team:['Crew A','Crew B','Crew C','Crew D'],
+      settings:{ company:'Roofers HQ LLC', phone:'(555) 123-4567', address:'100 Roof Lane' }
+    };
 
-    // ======== Helpers ========
-    const $=s=>document.querySelector(s); const $$=s=>document.querySelectorAll(s);
-    const money=n=>'$'+Number(n).toLocaleString('en-US');
-    function log(t){ const n=document.createElement('div'); n.className='text-sm'; n.textContent='• '+t; const a=$('#chatBox'); a.appendChild(n); a.scrollTop=a.scrollHeight; const toast=$('#toast'); toast.classList.remove('hidden'); setTimeout(()=>toast.classList.add('hidden'),1500); }
+    // Helpers
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+    const fmt = n => n.toLocaleString();
+    function log(msg){ console.log('[demo]', msg); }
 
-    // Estimator table
-    function renderEstimator(){ const body=$('#estBody'); body.innerHTML=''; let total=0; estItems.forEach(r=>{ total+=r.amount; const tr=document.createElement('tr'); tr.innerHTML=`<td class='py-1 border-b border-slate-200'>${r.item}</td><td class='py-1 border-b border-slate-200'>${money(r.amount)}</td>`; body.appendChild(tr); }); $('#estTotal').textContent=money(total); }
+    // Theme toggle
+    $('#themeToggle').addEventListener('click', ()=>{
+      document.body.classList.toggle('dark');
+      $('#themeToggle').textContent = document.body.classList.contains('dark')? 'Light' : 'Dark';
+    });
 
-    // POs
-    function renderPOs(){ const b=$('#poBody'); b.innerHTML=''; poRows.forEach(r=>{ const tr=document.createElement('tr'); const pill = r.status==='Delivered'? 'bg-emerald-100 text-emerald-700' : r.status==='Ordered'? 'bg-brand/10 text-brand' : 'bg-amber/20 text-amber'; tr.innerHTML=`<td class='py-1 border-b border-slate-200'>${r.id}</td><td class='py-1 border-b border-slate-200'>${r.supplier}</td><td class='py-1 border-b border-slate-200'>${r.items}</td><td class='py-1 border-b border-slate-200'><span class='pill ${pill}'>${r.status}</span></td>`; b.appendChild(tr); }); }
+    // Sidebar navigation
+    $$('#sideNav .nav').forEach(btn=>{
+      btn.addEventListener('click', ()=> navigate(btn.getAttribute('data-view')));
+    });
+    function navigate(view){
+      const id = `view-${view}`;
+      ['overview','leads','jobs','calendar','crews','materials','invoices','automations','analytics','settings'].forEach(v=>{
+        const el = document.getElementById(`view-${v}`);
+        if(el) el.classList.toggle('hidden', `view-${v}`!==id);
+      });
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
 
-    // Crew board
-    function jobCard(j){ const d=document.createElement('div'); d.className='cursor-grab rounded-md border border-slate-200 bg-slate-50 p-2 mb-1'; d.setAttribute('draggable','true'); d.dataset.id=j.id; d.innerHTML=`<div class='text-sm font-semibold'>${j.title}</div><div class='text-xs text-slate-500'>${j.meta}</div>`; d.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', JSON.stringify(j)); }); return d; }
-    function renderCrews(){ ['A','B','C','D'].forEach(c=>{ const zone=$('#col-'+c); zone.querySelectorAll('.cardJ').forEach(n=>n.remove()); zone.innerHTML=zone.innerHTML; zone.append(...crews[c].map(j=> jobCard(j))); }); }
-    function dropCard(e,to){ const j=JSON.parse(e.dataTransfer.getData('text/plain')); ['A','B','C','D'].forEach(k=> crews[k]=crews[k].filter(x=>x.id!==j.id)); crews[to].push(j); renderCrews(); log(`Moved ${j.title} to Crew ${to}`); }
+    // Modal helpers
+    function openModal(title, body){
+      $('#modalTitle').innerHTML = title;
+      $('#modalBody').innerHTML = body;
+      const m = $('#modal'); m.classList.remove('hidden'); m.classList.add('flex');
+    }
+    function closeModal(){ const m=$('#modal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+    // Toast
+    function showToast(){ const t=$('#toast'); t.classList.remove('hidden'); setTimeout(()=> t.classList.add('hidden'), 1800); }
+
+    // Export
+    $('#exportBtn').addEventListener('click', ()=>{
+      const data = JSON.stringify(state, null, 2);
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='roofers-hq-export.json'; a.click(); URL.revokeObjectURL(url);
+      showToast();
+    });
+
+    // -------- Overview: charts & gallery --------
+    function spark(id, vals, color){
+      const c = document.getElementById(id); if(!c) return; const dpr=window.devicePixelRatio||1;
+      const w=c.clientWidth, h=84; c.width=w*dpr; c.height=h*dpr; const ctx=c.getContext('2d'); ctx.scale(dpr,dpr);
+      ctx.clearRect(0,0,w,h); const max=Math.max(...vals), min=Math.min(...vals);
+      ctx.beginPath(); vals.forEach((v,i)=>{ const x=(i*(w-8))/(vals.length-1)+4; const y=h-14 - ((v-min)/(max-min||1))*54; i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
+      ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+      ctx.lineTo(w-4,h-10); ctx.lineTo(4,h-10); ctx.closePath();
+      const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0, color+'33'); g.addColorStop(1, color+'00'); ctx.fillStyle=g; ctx.fill();
+    }
+    function drawOverviewCharts(){
+      spark('kpiRev',[120,132,140,150,158,162,168,174,180,184],'#0ca6e9');
+      spark('kpiEst',[7,8,9,10,11,10,9,9,8,9],'#f59e0c');
+      spark('kpiAR',[40,44,46,48,52,51,50,52,51,51],'#f43f5f');
+      spark('rv1',[120,132,140,150,158,162,168,174,180,184],'#0ca6e9');
+      spark('rv2',[80,86,92,96,104,110,118,122,128,132],'#16a34a');
+      spark('rv3',[40,44,46,48,52,51,50,52,51,51],'#f59e0c');
+      spark('rv4',[11.2,11.4,11.6,11.8,12.0,12.2,12.2,12.4,12.4,12.48],'#93c5fd');
+      spark('mkt',[10,22,26,8,30],'#0ca6e9');
+    }
+
+    // Weather mini chart + raindrops
+    function drawWeather(){
+      const c=$('#weather'); if(!c) return; const dpr=window.devicePixelRatio||1; const w=c.clientWidth, h=c.clientHeight; c.width=w*dpr; c.height=h*dpr; const ctx=c.getContext('2d'); ctx.scale(dpr,dpr);
+      const temps=[82,80,77,74,79,81,83]; const precip=[.1,.2,.6,.15,.05,.25,.1];
+      const maxT=Math.max(...temps), minT=Math.min(...temps);
+      ctx.clearRect(0,0,w,h);
+      // precip bars
+      precip.forEach((p,i)=>{ const x=(i*(w-40))/(precip.length-1)+20; const bh=p*90; ctx.fillStyle='rgba(22,163,74,.35)'; ctx.fillRect(x-8,h-30-bh,16,bh); });
+      // temp line
+      ctx.beginPath(); temps.forEach((t,i)=>{ const x=(i*(w-40))/(temps.length-1)+20; const y=h-30 - ((t-minT)/(maxT-minT))*70; i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
+      ctx.strokeStyle='#0ca6e9'; ctx.lineWidth=2; ctx.stroke();
+      // labels
+      ctx.fillStyle='#475569'; ctx.font='12px Inter'; ctx.fillText('7‑day outlook', 12, 16);
+      // raindrops
+      const drops=$('#raindrops'); drops.innerHTML=''; for(let i=0;i<30;i++){ const d=document.createElement('div'); d.className='rain-drop'; d.style.left=Math.random()*(w-10)+"px"; d.style.top='0px'; d.style.animationDelay=(Math.random()*1.6)+'s'; d.style.opacity=.2+Math.random()*.6; drops.appendChild(d); }
+    }
+
+    // Job Site gallery
+    const galleryImgs=[
+      'https://images.unsplash.com/photo-1568117846303-4c7d1c1a58fb?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600585153097-6b7a1ae37f07?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1597004895285-58f32b9bc408?q=80&w=1200&auto=format&fit=crop'
+    ];
+    let galleryIdx=0; function galleryShow(i){ galleryIdx=(i+galleryImgs.length)%galleryImgs.length; const el=$('#jsPhoto'); if(el) el.src=galleryImgs[galleryIdx]; }
+    document.addEventListener('click',e=>{ if(e.target?.id==='jsPrev') galleryShow(galleryIdx-1); if(e.target?.id==='jsNext') galleryShow(galleryIdx+1); });
 
     // Comms threads
     const threads={
-      1:[{me:false,t:'Crew arrives 8–9am. Reply Y to confirm.'},{me:true,t:'Y'},{me:false,t:"Thanks! We'll knock and call on arrival."}],
+      1:[{me:false,t:'Crew arrives 8–9am. Reply Y to confirm.'},{me:true,t:'Y'},{me:false,t:'Thanks! We\'ll knock and call on arrival.'}],
       2:[{me:false,t:'Estimate attached. Questions?'},{me:true,t:'Choosing color: Sierra Gray vs Onyx.'}],
-      3:[{me:false,t:'Missed inspection. New slots: Wed 3:30, Thu 9:00.'},{me:true,t:'Thu 9 works.'}]
+      3:[{me:false,t:'Missed inspection. New slots: Wed 3:30, Thu 9:00.'},{me:true,t:'Thu 9 works.'}],
     };
-    function setThread(id){ const box=$('#thread'); box.innerHTML=''; threads[id].forEach(m=>{ const div=document.createElement('div'); div.className='mb-1 flex '+(m.me?'justify-end':''); div.innerHTML=`<div class='px-2 py-1 rounded-md text-sm border ${m.me?'bg-brand/10 border-brand/20':'bg-slate-100 border-slate-200'}'>${m.t}</div>`; box.appendChild(div); }); }
+    function setThread(id){ const box=$('#thread'); box.innerHTML=''; (threads[id]||[]).forEach(m=>{ const row=document.createElement('div'); row.className='mb-1 flex '+(m.me?'justify-end':''); const b=document.createElement('div'); b.className='px-2 py-1 rounded-md text-sm border '+(m.me?'bg-brand/10 border-brand/30':'bg-slate-50 border-slate-200'); b.textContent=m.t; row.appendChild(b); box.appendChild(row); }); }
+    setThread(1);
 
-    // Weather tiny chart + Marketing bars + KPI sparklines
-    function spark(id,data,color){ const c=document.getElementById(id); if(!c) return; const ctx=c.getContext('2d'); const DPR=window.devicePixelRatio||1; const w=c.clientWidth, h=70; c.width=w*DPR; c.height=h*DPR; ctx.scale(DPR,DPR); ctx.clearRect(0,0,w,h); const max=Math.max(...data), min=Math.min(...data); ctx.beginPath(); data.forEach((v,i)=>{ const x=(i*(w))/(data.length-1); const y=60-((v-min)/(max-min+1))*50; i?ctx.lineTo(x,y):ctx.moveTo(x,y); }); ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke(); }
-    function drawWeather(){ const temps=[82,80,77,74,79,81,83]; spark('weather',temps,'#0ca6e9'); }
-    function drawKPIs(){ spark('kpiRev',[120,132,140,150,158,162,168,174,180,184],'#0ca6e9'); spark('kpiEst',[4,5,6,6,7,8,9,8,9,9],'#f59e0c'); spark('kpiAR',[40,44,46,48,52,51,50,52,51,51],'#f43f5f'); spark('rv1',[120,132,140,150,158,162,168,174,180,184],'#0ca6e9'); spark('rv2',[80,86,92,96,104,110,118,122,128,132],'#16a34a'); spark('rv3',[40,44,46,48,52,51,50,52,51,51],'#f59e0c'); spark('rv4',[11.2,11.4,11.6,11.8,12.0,12.2,12.2,12.4,12.4,12.48],'#94a3b8'); }
-    function drawMarketing(){ const c=document.getElementById('mkt'); const ctx=c.getContext('2d'); const DPR=window.devicePixelRatio||1; const w=c.clientWidth; c.width=w*DPR; c.height=100*DPR; ctx.scale(DPR,DPR); const rows=[{n:'Google',v:38},{n:'LSA',v:22},{n:'Meta',v:26},{n:'Organic',v:8},{n:'Referral',v:30}]; const max=Math.max(...rows.map(r=>r.v)); rows.forEach((r,i)=>{ const x=20+i*60; const bh=(r.v/max)*80; ctx.fillStyle=i%2?'#0ca6e9AA':'#22c55eAA'; ctx.fillRect(x,90-bh,28,bh); ctx.fillStyle='#475569'; ctx.font='11px Inter'; ctx.fillText(r.n,x-2,96); }); }
+    // Voice AI panel
+    function toggleLivePanel(){ const p=$('#vaiPanel'); const on=p.classList.contains('hidden'); p.classList.toggle('hidden'); $('#vaiStatus').textContent = on? 'Live' : 'Idle'; if(on){ startTranscript(); fillTransfer(); } }
+    function startTranscript(){ const s=[ 'AI: Summit Peak Roofing, this is Ava. How can I help?', 'Lead: Need a quote for ~22 squares.', 'AI: Sending a link to upload roof photos.', 'AI: Thu storms — prefer Wed or Fri?', 'Lead: Friday works.', 'AI: Booked Fri 2:00pm with Crew B.' ]; let i=0; const box=$('#transcript'); box.innerHTML=''; const id=setInterval(()=>{ box.innerHTML += `<div>${s[i++]}</div>`; box.scrollTop=box.scrollHeight; if(i>=s.length) clearInterval(id); }, 900); }
+    function fillTransfer(){ const sel=$('#transferTo'); sel.innerHTML=''; ['Owner — Daniel','Office — Sarah','Closer — Mike','Project Mgr — Priya'].forEach(n=>{ const o=document.createElement('option'); o.textContent=n; sel.appendChild(o); }); }
+    function sendWhisper(){ const t=$('#whisperInput').value.trim(); if(!t) return; $('#transcript').innerHTML += `<div><b>Coach:</b> ${t}</div>`; $('#whisperInput').value=''; }
+    function transferCall(){ const to=$('#transferTo').value; openModal('Transfer Call', `<p>Transferring to <b>${to}</b>… (placeholder)</p>`); }
 
-    // AI chips
-    function renderChips(){ const list=[
-      ['Build schedule','/agent/schedule','Build schedule for next 10 days optimizing travel and weather.'],
-      ['Create Xactimate','/agent/xactimate','Create insurance‑grade PDF for Job #2317; include photos.'],
-      ['Call Jones lead','/agent/call','Call the Jones lead now; handle objections; book Fri 2pm.'],
-      ['Consolidate POs','/agent/purchasing','Consolidate Friday materials into one Beacon PO; nearest branch.'],
-      ['Permit pack','/agent/compliance','Generate permit pack for Dallas; prefill homeowner data.']
+    // Crew board sample jobs (draggable within columns)
+    const crewCols=['CrewA','CrewB','CrewC','CrewD','Thu','Fri','Sat','Sun'];
+    const crewData={
+      CrewA:[{id:'j1',title:'James — 25 Elm',meta:'Reshingle • 24 sq'}],
+      CrewB:[{id:'j2',title:'Perez — 9 Maple',meta:'Repair • 12 sq'}],
+      CrewC:[{id:'j3',title:'Nguyen — 14 Cedar',meta:'Tear-off • 22 sq'}],
+      CrewD:[], Thu:[], Fri:[], Sat:[], Sun:[]
+    };
+    function renderCrew(){
+      crewCols.forEach(c=>{
+        const el=$(`#col-${c}`); if(!el) return; // clear except header
+        el.querySelectorAll('.job').forEach(x=>x.remove());
+        (crewData[c]||[]).forEach(j=>{
+          const div=document.createElement('div'); div.className='job cursor-grab rounded-md border border-brand/30 bg-brand/10 p-2 mb-1'; div.draggable=true; div.dataset.id=j.id; div.innerHTML = `<div class="text-sm font-semibold">${j.title}</div><div class="text-xs subtle">${j.meta}</div>`;
+          div.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', JSON.stringify({id:j.id, from:c})); div.classList.add('opacity-60'); });
+          div.addEventListener('dragend',()=> div.classList.remove('opacity-60'));
+          el.appendChild(div);
+        });
+        el.addEventListener('dragover',e=>{ e.preventDefault(); el.classList.add('outline','outline-1','outline-brand/40'); });
+        el.addEventListener('dragleave',()=> el.classList.remove('outline','outline-1','outline-brand/40'));
+        el.addEventListener('drop',e=>{ e.preventDefault(); el.classList.remove('outline','outline-1','outline-brand/40'); const payload=JSON.parse(e.dataTransfer.getData('text/plain')); if(payload.from===c) return; const idx=(crewData[payload.from]||[]).findIndex(x=>x.id===payload.id); if(idx>-1){ const [card]=crewData[payload.from].splice(idx,1); (crewData[c]=crewData[c]||[]).push(card); renderCrew(); log(`Moved ${payload.id} to ${c}`); }
+        });
+      });
+    }
+
+    // Leads page render
+    function renderLeads(){
+      // chart bars
+      spark('leadChart',[27,19,14,9,11,5],'#0ca6e9');
+      const body=$('#leadBody'); body.innerHTML='';
+      const rows=[
+        {lead:'Leak — 12 Birch',contact:'Nina • 555‑1200',source:'Google Ads',stage:'New',value:850},
+        {lead:'Shingles — 5 Oak',contact:'Chris • 555‑2200',source:'Referral',stage:'Qualified',value:2400},
+        {lead:'Re-roof — 9 Cedar',contact:'Alex • 555‑3300',source:'LSA',stage:'Inspection',value:12100},
+        {lead:'Repair — 125 King',contact:'Morgan • 555‑9102',source:'Phone',stage:'Scheduled',value:980},
+      ];
+      rows.forEach(r=>{
+        const tr=document.createElement('tr'); tr.innerHTML = `
+          <td class="p-2">${r.lead}</td>
+          <td class="p-2">${r.contact}</td>
+          <td class="p-2">${r.source}</td>
+          <td class="p-2">${r.stage}</td>
+          <td class="p-2 text-right">$${fmt(r.value)}</td>
+          <td class="p-2 text-right"><button class="btn btn-outline text-sm" onclick="openModal('Lead','<p>Lead details placeholder.</p>')">Open</button></td>`;
+        body.appendChild(tr);
+      });
+    }
+
+    // Jobs page render
+    function renderJobs(){
+      const body=$('#jobsBody'); body.innerHTML='';
+      state.jobs.forEach(j=>{
+        const tr=document.createElement('tr'); tr.innerHTML = `
+          <td class="px-4 py-3"><div class="font-semibold">${j.address}</div><div class="text-xs subtle">${j.id}</div></td>
+          <td class="px-4 py-3">${j.client}</td>
+          <td class="px-4 py-3">${j.type}</td>
+          <td class="px-4 py-3">${new Date(j.date).toLocaleDateString()}</td>
+          <td class="px-4 py-3">${j.team}</td>
+          <td class="px-4 py-3"><span class="pill ${j.status==='Completed'?'bg-emerald-100 text-emerald-700': j.status==='Issue'?'bg-rose/10 text-rose': j.status==='In Progress'?'bg-amber/20 text-amber':'bg-brand/10 text-brand'}">${j.status}</span></td>
+          <td class="px-4 py-3 text-right"><button class="btn btn-outline text-sm mr-2" onclick="openModal('Edit ${j.id}','<p>Edit form placeholder.</p>')">Edit</button><button class="btn btn-danger text-sm" onclick="removeJob('${j.id}')">Delete</button></td>`;
+        body.appendChild(tr);
+      });
+    }
+    function removeJob(id){ state.jobs = state.jobs.filter(j=>j.id!==id); renderJobs(); log(`Deleted job ${id}`); }
+
+    // Calendar render (simple)
+    const cal = { date: new Date() };
+    function renderCalendar(){
+      const d=new Date(cal.date.getFullYear(), cal.date.getMonth(), 1); const firstDay=d.getDay(); const daysInMonth=new Date(d.getFullYear(), d.getMonth()+1,0).getDate();
+      $('#calLabel').textContent = d.toLocaleDateString(undefined,{month:'long', year:'numeric'});
+      const grid=$('#calendarGrid'); grid.innerHTML='';
+      ;['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(w=>{ const hd=document.createElement('div'); hd.className='text-center subtle text-sm'; hd.textContent=w; grid.appendChild(hd); });
+      for(let i=0;i<firstDay;i++){ const cell=document.createElement('div'); cell.className='h-20 rounded-lg border border-transparent'; grid.appendChild(cell); }
+      for(let day=1;day<=daysInMonth;day++){
+        const cell=document.createElement('div'); cell.className='h-20 rounded-lg border border-slate-200 p-2 flex flex-col'; cell.innerHTML = `<div class="text-xs subtle">${day}</div>`;
+        if(Math.random()>.7){ const tag=document.createElement('div'); tag.className='mt-auto pill bg-brand/10 text-brand text-xs w-fit'; tag.textContent='Install'; cell.appendChild(tag); }
+        grid.appendChild(cell);
+      }
+    }
+    $('#prevMonth').addEventListener('click',()=>{ cal.date.setMonth(cal.date.getMonth()-1); renderCalendar(); });
+    $('#nextMonth').addEventListener('click',()=>{ cal.date.setMonth(cal.date.getMonth()+1); renderCalendar(); });
+
+    // Crews page cards
+    function renderCrews(){
+      const wrap=$('#crewCards'); wrap.innerHTML='';
+      state.team.forEach(name=>{
+        const c=document.createElement('div'); c.className='card p-4'; c.innerHTML = `<div class="flex items-center justify-between"><div class="font-semibold">${name}</div><button class="btn btn-outline text-sm">Assign</button></div><div class="mt-2 text-sm subtle">Capacity: 3 jobs/day • Safety: 98%</div>`; wrap.appendChild(c);
+      });
+    }
+
+    // Materials page table
+    function renderMaterials(){
+      const body=$('#poFull'); body.innerHTML='';
+      const rows=[{id:'#1042',supplier:'Beacon',items:'Owens Corning Duration – Sierra Gray',status:'Delivered'},{id:'#1043',supplier:'ABC Supply',items:'Underlayment, Nails',status:'Ordered'},{id:'#1044',supplier:'Beacon',items:'Ridge Cap – Charcoal',status:'Backordered'}];
+      rows.forEach(r=>{ const tr=document.createElement('tr'); tr.innerHTML = `<td class="p-2">${r.id}</td><td class="p-2">${r.supplier}</td><td class="p-2">${r.items}</td><td class="p-2">${r.status}</td><td class="p-2 text-right"><button class=\"btn btn-outline text-sm\" onclick=\"openModal('PO ${r.id}','<p>PO details placeholder.</p>')\">Open</button></td>`; body.appendChild(tr); });
+    }
+
+    // Invoices cards
+    function renderInvoices(){
+      const wrap=$('#invoiceList'); wrap.innerHTML='';
+      state.invoices.forEach(inv=>{ const card=document.createElement('div'); card.className='card p-4'; card.innerHTML = `<div class="flex items-center justify-between"><div class="font-semibold">${inv.id}</div><span class="pill ${inv.status==='Paid'?'bg-emerald-100 text-emerald-700':'bg-amber/20 text-amber'}">${inv.status}</span></div><div class="mt-2 text-slate-700">${inv.client}</div><div class="mt-1 text-ink text-xl font-bold">$${fmt(inv.amount)}</div><div class="mt-1 subtle text-sm">Due ${inv.due}</div><div class="mt-3 flex gap-2"><button class="btn btn-outline text-sm" onclick="openModal('Invoice ${inv.id}','<p>Invoice preview placeholder.</p>')">View</button><button class="btn btn-primary text-sm" onclick="log('Reminded ${inv.id}')">Remind</button></div>`; wrap.appendChild(card); });
+    }
+
+    // Automations list
+    function renderAutomations(){
+      const wrap=$('#autoRules'); wrap.innerHTML='';
+      const rules=[
+        {name:'Lead intake → AI Setter',desc:'Call/SMS within 30s, book inspection, drop on Calendar.'},
+        {name:'No‑show recovery',desc:'3‑step SMS series, rebook with two slots.'},
+        {name:'Material backorder',desc:'Suggest substitutes; notify PM + homeowner; shift crew.'},
+        {name:'Weather rule',desc:'If rain prob >70% next 24h, auto‑reschedule outdoor jobs.'},
+        {name:'AR chase',desc:'Net 15 → smart sequence; escalate to call if no response.'},
+      ];
+      rules.forEach(r=>{ const c=document.createElement('div'); c.className='card p-4'; c.innerHTML = `<div class="font-semibold">${r.name}</div><div class="subtle text-sm mt-1">${r.desc}</div><div class="mt-2 flex gap-2"><button class="btn btn-primary text-sm">Enable</button><button class="btn btn-outline text-sm" onclick="openModal('${r.name}','<p>Config placeholder.</p>')">Configure</button></div>`; wrap.appendChild(c); });
+    }
+
+    // Roofer AI chips & chat
+    const chipText=[
+      'Build 7‑day schedule optimizing travel + weather',
+      'Create insurance‑grade Xactimate PDF for Job #2317',
+      'Call the Jones lead now; handle objections; book Fri 2pm',
+      'Consolidate Friday materials into one Beacon PO',
+      'Generate permit pack for Dallas and email clerk'
     ];
-      const wrap=$('#chips'); wrap.innerHTML=''; list.forEach(([label,path,desc])=>{ const row=document.createElement('div'); row.className='rounded-lg border border-slate-200 p-2'; row.innerHTML=`<div class='font-semibold text-sm'>${label}</div><div class='text-xs subtle'>${desc}</div><button class='mt-1 btn text-sm' onclick="log('${label} → ${path}')">Run</button>`; wrap.appendChild(row); }); }
+    function renderChips(){ const wrap=$('#chips'); wrap.innerHTML=''; chipText.forEach(t=>{ const b=document.createElement('button'); b.className='btn btn-outline w-full text-left'; b.textContent=t; b.onclick=()=>{ $('#chatBox').innerHTML += `<div><b>You:</b> ${t}</div>`; }; wrap.appendChild(b); }); }
+    function sendChat(){ const i=$('#chatInput'); const t=i.value.trim(); if(!t) return; $('#chatBox').innerHTML += `<div><b>You:</b> ${t}</div>`; i.value=''; }
 
-    function sendChat(){ const i=$('#chatInput'); if(!i.value.trim()) return; const b=$('#chatBox'); const mine=document.createElement('div'); mine.className='text-sm text-right'; mine.textContent=i.value; b.appendChild(mine); i.value=''; setTimeout(()=>{ const resp=document.createElement('div'); resp.className='text-sm text-slate-600'; resp.textContent='Foreman: queued that for you.'; b.appendChild(resp); b.scrollTop=b.scrollHeight; },500); }
+    // Populate PO table in Overview
+    function renderOverviewPOs(){ const body=$('#poBody'); if(!body) return; const rows=[{id:'#1042',supplier:'Beacon',items:'Owens Corning Duration – Sierra Gray',status:'Delivered'},{id:'#1043',supplier:'ABC Supply',items:'Underlayment, Nails',status:'Ordered'},{id:'#1044',supplier:'Beacon',items:'Ridge Cap – Charcoal',status:'Backordered'}]; body.innerHTML=''; rows.forEach(r=>{ const tr=document.createElement('tr'); tr.innerHTML = `<td class=\"py-1 border-b border-slate-100\">${r.id}</td><td class=\"py-1 border-b border-slate-100\">${r.supplier}</td><td class=\"py-1 border-b border-slate-100\">${r.items}</td><td class=\"py-1 border-b border-slate-100\"><span class=\"pill ${r.status==='Delivered'?'bg-emerald-100 text-emerald-700': r.status==='Ordered'?'bg-brand/10 text-brand':'bg-amber/20 text-amber'}\">${r.status}</span></td>`; body.appendChild(tr); }); }
 
-    // Boot
-    function init(){ renderEstimator(); renderPOs(); renderCrews(); setThread(1); drawWeather(); drawKPIs(); drawMarketing(); renderChips(); }
+    // Init
+    function init(){
+      navigate('overview');
+      drawOverviewCharts();
+      drawWeather();
+      renderCrew();
+      renderOverviewPOs();
+      renderLeads();
+      renderJobs();
+      renderCalendar();
+      renderCrews();
+      renderMaterials();
+      renderInvoices();
+      renderAutomations();
+      renderChips();
+    }
+    window.addEventListener('resize', ()=>{ drawOverviewCharts(); drawWeather(); });
     init();
   </script>
 </body>
