@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roofers HQ — Operator‑Grade Dashboard (Light)</title>
+  <meta name="description" content="Roofers HQ: operator‑grade, data‑dense, client‑ready single‑file demo. 12 widgets, AI rail, drag & drop, export, and believable sample data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'] },
+          colors: {
+            brand: { DEFAULT:'#0ca6e9', 600:'#0284c7' },
+            accent: { DEFAULT:'#c1ff72' },
+            amber: '#f59e0c',
+            rose: '#f43f5f',
+            slateink:'#111827'
+          },
+          boxShadow: {
+            soft:'0 10px 30px rgba(2,6,23,.10), 0 2px 8px rgba(2,6,23,.06)'
+          },
+          borderRadius: { xl2:'1.25rem' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,sans-serif}
+    .card{border-radius:1rem; background:#ffffff; border:1px solid #e5e7eb}
+    .hoverlift{transition:transform .16s ease, box-shadow .16s ease}
+    .hoverlift:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.08)}
+    .pill{border-radius:9999px; padding:.25rem .6rem; font-weight:700; font-size:.72rem}
+    .subtle{color:#667085}
+    .spark{width:100%; height:70px}
+    .kanban-col{min-height:140px}
+    .btn{border:1px solid #e5e7eb; background:#fff; border-radius:.6rem; padding:.5rem .75rem}
+  </style>
+</head>
+<body class="bg-slate-50 text-slateink">
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <div class="max-w-[1400px] mx-auto px-4 h-14 flex items-center gap-3">
+      <div class="flex items-center gap-3 select-none">
+        <div class="w-9 h-9 rounded-xl bg-brand grid place-items-center text-white shadow-sm">🏠</div>
+        <div class="leading-tight">
+          <div class="font-extrabold tracking-tight text-slate-900 text-lg">Roofers HQ</div>
+          <div class="text-slate-500 text-xs">Operator dashboard</div>
+        </div>
+      </div>
+      <div class="flex-1">
+        <div class="relative max-w-xl">
+          <input id="q" class="w-full rounded-lg bg-white border border-slate-200 px-4 py-2.5 pl-10 outline-none focus:border-brand/60 focus:ring-2 focus:ring-brand/15 transition" placeholder="Search jobs, clients, addresses…" />
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <span class="pill bg-accent/60 text-slate-900">Voice Agent: Online</span>
+        <button id="newJobBtn" class="bg-brand hover:bg-brand-600 text-white font-semibold px-3 py-2 rounded-lg transition">+ New Job</button>
+        <button id="exportBtn" class="btn">Export</button>
+        <button class="relative btn" title="Notifications">🔔<span class="absolute -right-1 -top-1 w-2.5 h-2.5 bg-rose rounded-full ring-2 ring-white"></span></button>
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-600 grid place-items-center text-white text-xs font-extrabold">HQ</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-[1400px] mx-auto px-4 py-6 grid grid-cols-1 xl:grid-cols-[220px_1fr_320px] gap-6">
+    <!-- Sidebar -->
+    <aside class="hidden xl:block">
+      <div class="rounded-xl border border-slate-200 bg-white">
+        <div class="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+          <span class="font-semibold">Menu</span>
+          <span class="text-xs subtle">v1.0</span>
+        </div>
+        <nav class="p-2 text-slate-700">
+          <button data-view="overview" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">🏠 Overview</button>
+          <button data-view="leads" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">📇 Leads</button>
+          <button data-view="jobs" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">📋 Jobs</button>
+          <button data-view="calendar" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">🗓 Calendar</button>
+          <button data-view="crews" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">👷‍♂️ Crews</button>
+          <button data-view="materials" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">📦 Materials</button>
+          <button data-view="invoices" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">🧾 Invoices</button>
+          <button data-view="automations" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">⚡ Automations</button>
+          <button data-view="analytics" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">📈 Analytics</button>
+          <button data-view="settings" class="nav w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-50">⚙️ Settings</button>
+        </nav>
+        <div class="px-4 py-3 border-t border-slate-200">
+          <div class="text-xs subtle">Teams on site</div>
+          <div class="mt-2 flex -space-x-2">
+            <div class="w-7 h-7 rounded-full bg-emerald-500 grid place-items-center text-xs font-bold text-white">A</div>
+            <div class="w-7 h-7 rounded-full bg-brand grid place-items-center text-xs font-bold text-white">B</div>
+            <div class="w-7 h-7 rounded-full bg-amber grid place-items-center text-xs font-bold text-white">C</div>
+            <div class="w-7 h-7 rounded-full bg-rose grid place-items-center text-xs font-bold text-white">D</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content (12 widgets) -->
+    <main class="space-y-6">
+      <!-- Row: KPIs (4) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><div class="subtle text-sm">Open Jobs</div><span class="pill bg-brand/10 text-brand">+8% MoM</span></div>
+          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">12</div><div class="subtle text-sm">Avg lead time 5d</div></div>
+          <div class="mt-3 h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-brand" style="width:62%"></div></div>
+        </div>
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><div class="subtle text-sm">This Month Revenue</div><span class="pill bg-accent text-slate-900">+$12%</span></div>
+          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">$184.2k</div><div class="subtle text-sm">41 jobs</div></div>
+          <canvas id="kpiRev" class="spark mt-2"></canvas>
+        </div>
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><div class="subtle text-sm">Outstanding Estimates</div><span class="pill bg-amber/20 text-amber">5 due</span></div>
+          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">9</div><div class="subtle text-sm">Avg age 3d</div></div>
+          <canvas id="kpiEst" class="spark mt-2"></canvas>
+        </div>
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><div class="subtle text-sm">A/R</div><span class="pill bg-rose/10 text-rose">$51.7k</span></div>
+          <div class="mt-2 flex items-end justify-between"><div class="text-4xl font-extrabold text-slate-900">$51.7k</div><div class="subtle text-sm">12 invoices</div></div>
+          <canvas id="kpiAR" class="spark mt-2"></canvas>
+        </div>
+      </section>
+
+      <!-- Row: Lead Pipeline (6 col) + AI Estimator (6 col) -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- Lead Pipeline -->
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-semibold">Lead Pipeline (Today)</h3>
+            <div class="text-sm subtle">7‑day win <span class="font-bold text-slate-900">38%</span></div>
+          </div>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">New</div><div class="text-2xl font-extrabold text-slate-900">27</div></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Qualified</div><div class="text-2xl font-extrabold text-slate-900">19</div></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Inspection</div><div class="text-2xl font-extrabold text-slate-900">14</div></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Quote Sent</div><div class="text-2xl font-extrabold text-slate-900">9</div></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Won</div><div class="text-2xl font-extrabold text-slate-900">11</div></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Lost</div><div class="text-2xl font-extrabold text-slate-900">5</div></div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2 text-sm">
+            <span class="pill bg-slate-100">3 leads stalled >48h — nudge?</span>
+            <button class="btn" onclick="log('Auto‑SMS confirm to 3 stalled leads')">Auto‑SMS confirm</button>
+            <button class="btn" onclick="log('Sent 9 quotes')">Send quote</button>
+            <button class="btn" onclick="log('Voice Agent calling pipeline leads')">Call via Voice Agent</button>
+          </div>
+        </div>
+
+        <!-- AI Estimator -->
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><h3 class="font-semibold">AI Estimator</h3><div class="subtle text-xs">Runs locally; can call Hover/EagleView.</div></div>
+          <div class="mt-3 grid grid-cols-[160px_1fr] gap-3 items-start">
+            <div class="grid gap-2">
+              <div class="w-full h-[110px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Front Elevation</div>
+              <div class="w-full h-[110px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Rear Elevation</div>
+            </div>
+            <div>
+              <div class="grid grid-cols-3 gap-2 text-sm mb-2">
+                <input class="col-span-2 rounded-md border border-slate-200 px-2 py-2" placeholder="Address e.g. 742 Evergreen Ter" />
+                <input class="rounded-md border border-slate-200 px-2 py-2" placeholder="Pitch 6/12" />
+              </div>
+              <table class="w-full text-sm border-collapse">
+                <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b border-slate-200">Item</th><th class="text-left pb-1 border-b border-slate-200">Amount</th></tr></thead>
+                <tbody id="estBody"></tbody>
+              </table>
+              <div class="flex items-center justify-between mt-2 text-sm subtle"><div>Median time: <b>1m 12s</b> • Accuracy delta: <b>3.4%</b></div><div>Total <b id="estTotal" class="text-lg text-slate-900"></b></div></div>
+              <div class="mt-2 flex flex-wrap gap-2 text-sm">
+                <button class="btn" onclick="log('Generated estimate PDF')">Generate PDF</button>
+                <button class="btn" onclick="log('Sent e‑sign link')">E‑sign</button>
+                <button class="btn" onclick="log('Opened finance options')">Finance options</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Row: Crew Board + POs -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- Crew Scheduling Board (drag/drop) -->
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Crew Scheduling (Today + 7)</h3><div class="subtle text-sm">Constraints: weather, crew capacity, materials</div></div>
+          <p class="mt-2 pill bg-amber/20 text-amber inline-block">Crew B overallocated; split to Crew D?</p>
+          <div class="mt-3 grid grid-cols-4 gap-2 text-sm">
+            <div id="col-A" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'A')"><h5 class="subtle mb-1">Crew A</h5></div>
+            <div id="col-B" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'B')"><h5 class="subtle mb-1">Crew B</h5></div>
+            <div id="col-C" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'C')"><h5 class="subtle mb-1">Crew C</h5></div>
+            <div id="col-D" class="kanban-col rounded-lg border border-slate-200 p-2" ondragover="event.preventDefault()" ondrop="dropCard(event,'D')"><h5 class="subtle mb-1">Crew D</h5></div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2 text-sm">
+            <button class="btn" onclick="log('Auto‑texted all crews')">Auto‑text crew</button>
+            <button class="btn" onclick="log('Notified homeowners of changes')">Notify homeowner</button>
+            <button class="btn" onclick="log('Re‑routed crews to optimize travel')">Re‑route</button>
+          </div>
+        </div>
+
+        <!-- POs -->
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Material Orders & PO Automation</h3>
+          <table class="mt-2 w-full text-sm">
+            <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b border-slate-200">PO #</th><th class="text-left pb-1 border-b border-slate-200">Supplier</th><th class="text-left pb-1 border-b border-slate-200">Items</th><th class="text-left pb-1 border-b border-slate-200">Status</th></tr></thead>
+            <tbody id="poBody"></tbody>
+          </table>
+          <div class="mt-2 flex flex-wrap gap-2 text-sm"><button class="btn" onclick="log('Reordered Beacon #1042')">Reorder</button><button class="btn" onclick="log('Substituted material on #1044')">Substitute material</button><button class="btn" onclick="log('Tracking truck for ABC #1043')">Track truck</button></div>
+        </div>
+      </section>
+
+      <!-- Row: Progress + Revenue & Cash -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Job Site Progress</h3>
+          <div class="grid grid-cols-[160px_1fr] gap-3 items-center text-sm mt-2">
+            <div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="w-full h-[100px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Before</div>
+                <div class="w-full h-[100px] rounded-lg border border-slate-200 bg-slate-50 grid place-items-center text-slate-500 text-xs">Underlayment</div>
+              </div>
+              <div class="mt-2">Alert: <b>Missing permit photo for Job #2317</b></div>
+              <div class="mt-1 flex gap-2"><button class="btn" onclick="log('Requested permit photo for #2317')">Request photo</button><button class="btn" onclick="log('QA flag added to #2317')">Flag QA</button><button class="btn" onclick="log('Change order created for #2317')">Add change order</button></div>
+            </div>
+            <div>
+              <div class="subtle">AI % complete</div>
+              <div class="text-2xl font-extrabold text-slate-900">64%</div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden mt-1"><span style="width:64%" class="block h-full bg-gradient-to-r from-brand to-emerald-500"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hoverlift p-4">
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Revenue & Cash</h3><div class="subtle">This Month</div></div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-2">
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Booked</div><div class="text-2xl font-extrabold text-slate-900">$184,200</div><canvas id="rv1" class="spark mt-1"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Collected</div><div class="text-2xl font-extrabold text-slate-900">$132,480</div><canvas id="rv2" class="spark mt-1"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">A/R</div><div class="text-2xl font-extrabold text-slate-900">$51,720</div><canvas id="rv3" class="spark mt-1"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Avg Ticket</div><div class="text-2xl font-extrabold text-slate-900">$12,480</div><canvas id="rv4" class="spark mt-1"></canvas></div>
+          </div>
+          <div class="mt-2 subtle text-sm">Win rate (30D): <b>41%</b></div>
+          <div class="mt-2 flex flex-wrap gap-2 text-sm"><button class="btn" onclick="log('Sent invoice batch')">Send invoice</button><button class="btn" onclick="log('Chasing A/R $51,720')">Chase A/R</button><button class="btn" onclick="log('Applied financing to open invoices')">Apply financing</button></div>
+        </div>
+      </section>
+
+      <!-- Row: Comms + Voice + Weather + Compliance + Marketing + Insights -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div class="card hoverlift p-4" id="comms">
+          <div class="flex items-center justify-between"><h3 class="font-semibold">Customer Comms Hub</h3><div class="subtle">SMS / Email / Phone</div></div>
+          <div class="mt-2 grid grid-cols-[180px_1fr] gap-3">
+            <div class="rounded-lg border border-slate-200 max-h-48 overflow-auto">
+              <a href="#" class="block px-3 py-2 border-b border-slate-200" onclick="setThread(1);return false;">Lisa Collins — SMS</a>
+              <a href="#" class="block px-3 py-2 border-b border-slate-200" onclick="setThread(2);return false;">Matt Riley — Email</a>
+              <a href="#" class="block px-3 py-2" onclick="setThread(3);return false;">Brandon Mitchell — Phone</a>
+            </div>
+            <div>
+              <div id="thread" class="rounded-lg border border-slate-200 p-2 max-h-48 overflow-auto bg-slate-50"></div>
+              <div class="mt-2 flex flex-wrap gap-2 text-sm">
+                <button class="btn" onclick="log('Smart prompt: Approve day‑of schedule?')">Approve day‑of schedule? Y/N</button>
+                <button class="btn" onclick="log('Triggered no‑show recovery sequence')">No‑show recovery</button>
+                <button class="btn" onclick="log('Requested post‑install review')">Post‑install review</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Voice AI Setter / Receptionist</h3>
+          <div class="grid grid-cols-[140px_1fr] gap-3 items-start mt-2">
+            <div class="rounded-lg border border-slate-200 bg-slate-50 h-[90px] grid place-items-center text-slate-500 text-sm">Waveform</div>
+            <div>
+              <div id="transcript" class="h-[90px] rounded-lg border border-slate-200 p-2 overflow-auto bg-slate-50 text-sm"></div>
+              <div class="mt-2 flex items-center gap-3 text-sm"><label><input type="checkbox" checked/> After‑hours</label><label><input type="checkbox"/> Spanish</label><label><input type="checkbox"/> Escalate</label></div>
+              <div class="mt-2 flex gap-2 text-sm"><button class="btn" onclick="log('Listen live')">Listen live</button><button class="btn" onclick="log('Whisper coach ON')">Whisper coach</button><button class="btn" onclick="log('Transferred to closer')">Transfer</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Weather Guard</h3>
+          <div class="grid grid-cols-[1fr_200px] gap-3 items-center mt-2">
+            <canvas id="weather" class="spark"></canvas>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-1"><span>Thu • Thunderstorms</span><span class="pill bg-amber/20 text-amber">⚡ 60%</span></div>
+              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-1"><span>Sat • High winds</span><span class="pill bg-slate-100">💨 28mph</span></div>
+              <div class="flex items-center justify-between rounded-lg border border-slate-200 px-2 py-1"><span>Rule: wind >25mph → auto‑reschedule</span><span class="pill bg-emerald-100 text-emerald-700">ON</span></div>
+              <div class="flex gap-2"><button class="btn" onclick="log('Bulk rescheduled weather‑affected jobs')">Bulk reschedule</button><button class="btn" onclick="log('Notified homeowners re: weather')">Notify homeowners</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Compliance & Permits</h3>
+          <div class="mt-2 grid grid-cols-2 gap-2 text-sm">
+            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> City permit — PO‑3215</label>
+            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1"><input type="checkbox"/> HOA approval — Miller</label>
+            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> Insurance cert on file</label>
+            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-amber-50"><input type="checkbox"/> Crew safety briefing complete</label>
+            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1 bg-emerald-50"><input type="checkbox" checked/> Dumpster scheduled</label>
+            <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-2 py-1"><input type="checkbox"/> Utility lines marked</label>
+          </div>
+          <div class="mt-2 flex gap-2 text-sm"><button class="btn" onclick="log('Filed permit for Dallas')">File permit</button><button class="btn" onclick="log('Attached docs to Job #2317')">Attach docs</button><button class="btn" onclick="log('Requested inspection for Job #2317')">Request inspection</button></div>
+        </div>
+
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Marketing & Referrals</h3>
+          <div class="grid grid-cols-2 gap-3 items-center mt-2">
+            <canvas id="mkt" class="spark"></canvas>
+            <div class="text-sm">
+              <div class="flex flex-wrap gap-2"><span class="pill bg-slate-100">Google Ads CPL <b>$82</b></span><span class="pill bg-slate-100">Meta CPL <b>$57</b></span><span class="pill bg-accent">Referrals CPL <b>$18</b></span></div>
+              <ul class="list-disc ml-4 mt-2 text-slate-600"><li>Top referrer: <b>Garcia Realty</b> (4 jobs, $53k)</li><li>LSAs driving 38% of booked calls</li></ul>
+              <div class="mt-2 flex gap-2"><button class="btn" onclick="log('Spun up ads — $1500')">Spin up ads</button><button class="btn" onclick="log('Launched referral SMS to 120 contacts')">Launch referral SMS</button><button class="btn" onclick="log('Generated yard sign QR')">Generate yard sign QR</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hoverlift p-4">
+          <h3 class="font-semibold">Analytics & Insights</h3>
+          <div class="p-3 rounded-lg border border-brand/20 bg-brand/5 text-sm">Recommendation: Raising <b>3‑tab price $0.18/sq ft</b> increases margin <b>+$4.6k/mo</b>.</div>
+          <ul class="mt-2 grid grid-cols-2 gap-2 text-sm text-slate-600"><li>Time‑to‑first‑touch</li><li>Days in stage</li><li>Estimator accuracy</li><li>Crew productivity</li></ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Rail: AI Project Foreman -->
+    <aside class="hidden xl:block space-y-4">
+      <div class="card p-4">
+        <div class="flex items-center justify-between"><h3 class="font-semibold">AI Project Foreman</h3><span class="pill bg-emerald-100 text-emerald-700">Online</span></div>
+        <div id="chips" class="mt-2 space-y-2 text-sm"></div>
+        <div class="mt-3 border-t pt-3">
+          <div class="text-xs subtle mb-1">Chat</div>
+          <div class="rounded-lg border border-slate-200 h-40 p-2 overflow-auto bg-slate-50 text-sm" id="chatBox"></div>
+          <div class="mt-2 flex gap-2"><input id="chatInput" class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ask the foreman…"><button class="bg-brand hover:bg-brand-600 text-white px-3 py-2 rounded-lg text-sm" onclick="sendChat()">Send</button></div>
+        </div>
+      </div>
+      <div class="card p-4 text-xs text-slate-600">Private/local agents • Optional APIs: Google Calendar, Twilio, QuickBooks, Hover/EagleView, OpenWeather, Stripe.</div>
+    </aside>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 hidden"><div class="rounded-xl bg-white border border-slate-200 px-4 py-3 shadow-soft"><div class="text-slate-900 font-semibold">Export ready</div><div class="text-slate-600 text-sm">This demo will download a JSON file of your data.</div></div></div>
+
+  <script>
+    // ======== Sample State ========
+    const estItems=[{item:'Labor',amount:5200},{item:'Materials',amount:6100},{item:'Disposal',amount:480},{item:'Overhead & Margin',amount:700}];
+    const poRows=[{id:'#1042',supplier:'Beacon',items:'Owens Corning Duration – Sierra Gray',status:'Delivered'},{id:'#1043',supplier:'ABC Supply',items:'Underlayment, Nails',status:'Ordered'},{id:'#1044',supplier:'Beacon',items:'Ridge Cap – Charcoal',status:'Backordered'}];
+    const crews={A:[{id:'j1',title:'James — 25 Elm',meta:'Reshingle • 24 sq'},{id:'j2',title:'Perez — 9 Maple',meta:'Repair • 12 sq'}],B:[{id:'j3',title:'Nguyen — 14 Cedar',meta:'Tear‑off • 22 sq'}],C:[],D:[]};
+
+    // ======== Helpers ========
+    const $=s=>document.querySelector(s); const $$=s=>document.querySelectorAll(s);
+    const money=n=>'$'+Number(n).toLocaleString('en-US');
+    function log(t){ const n=document.createElement('div'); n.className='text-sm'; n.textContent='• '+t; const a=$('#chatBox'); a.appendChild(n); a.scrollTop=a.scrollHeight; const toast=$('#toast'); toast.classList.remove('hidden'); setTimeout(()=>toast.classList.add('hidden'),1500); }
+
+    // Estimator table
+    function renderEstimator(){ const body=$('#estBody'); body.innerHTML=''; let total=0; estItems.forEach(r=>{ total+=r.amount; const tr=document.createElement('tr'); tr.innerHTML=`<td class='py-1 border-b border-slate-200'>${r.item}</td><td class='py-1 border-b border-slate-200'>${money(r.amount)}</td>`; body.appendChild(tr); }); $('#estTotal').textContent=money(total); }
+
+    // POs
+    function renderPOs(){ const b=$('#poBody'); b.innerHTML=''; poRows.forEach(r=>{ const tr=document.createElement('tr'); const pill = r.status==='Delivered'? 'bg-emerald-100 text-emerald-700' : r.status==='Ordered'? 'bg-brand/10 text-brand' : 'bg-amber/20 text-amber'; tr.innerHTML=`<td class='py-1 border-b border-slate-200'>${r.id}</td><td class='py-1 border-b border-slate-200'>${r.supplier}</td><td class='py-1 border-b border-slate-200'>${r.items}</td><td class='py-1 border-b border-slate-200'><span class='pill ${pill}'>${r.status}</span></td>`; b.appendChild(tr); }); }
+
+    // Crew board
+    function jobCard(j){ const d=document.createElement('div'); d.className='cursor-grab rounded-md border border-slate-200 bg-slate-50 p-2 mb-1'; d.setAttribute('draggable','true'); d.dataset.id=j.id; d.innerHTML=`<div class='text-sm font-semibold'>${j.title}</div><div class='text-xs text-slate-500'>${j.meta}</div>`; d.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', JSON.stringify(j)); }); return d; }
+    function renderCrews(){ ['A','B','C','D'].forEach(c=>{ const zone=$('#col-'+c); zone.querySelectorAll('.cardJ').forEach(n=>n.remove()); zone.innerHTML=zone.innerHTML; zone.append(...crews[c].map(j=> jobCard(j))); }); }
+    function dropCard(e,to){ const j=JSON.parse(e.dataTransfer.getData('text/plain')); ['A','B','C','D'].forEach(k=> crews[k]=crews[k].filter(x=>x.id!==j.id)); crews[to].push(j); renderCrews(); log(`Moved ${j.title} to Crew ${to}`); }
+
+    // Comms threads
+    const threads={
+      1:[{me:false,t:'Crew arrives 8–9am. Reply Y to confirm.'},{me:true,t:'Y'},{me:false,t:"Thanks! We'll knock and call on arrival."}],
+      2:[{me:false,t:'Estimate attached. Questions?'},{me:true,t:'Choosing color: Sierra Gray vs Onyx.'}],
+      3:[{me:false,t:'Missed inspection. New slots: Wed 3:30, Thu 9:00.'},{me:true,t:'Thu 9 works.'}]
+    };
+    function setThread(id){ const box=$('#thread'); box.innerHTML=''; threads[id].forEach(m=>{ const div=document.createElement('div'); div.className='mb-1 flex '+(m.me?'justify-end':''); div.innerHTML=`<div class='px-2 py-1 rounded-md text-sm border ${m.me?'bg-brand/10 border-brand/20':'bg-slate-100 border-slate-200'}'>${m.t}</div>`; box.appendChild(div); }); }
+
+    // Weather tiny chart + Marketing bars + KPI sparklines
+    function spark(id,data,color){ const c=document.getElementById(id); if(!c) return; const ctx=c.getContext('2d'); const DPR=window.devicePixelRatio||1; const w=c.clientWidth, h=70; c.width=w*DPR; c.height=h*DPR; ctx.scale(DPR,DPR); ctx.clearRect(0,0,w,h); const max=Math.max(...data), min=Math.min(...data); ctx.beginPath(); data.forEach((v,i)=>{ const x=(i*(w))/(data.length-1); const y=60-((v-min)/(max-min+1))*50; i?ctx.lineTo(x,y):ctx.moveTo(x,y); }); ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke(); }
+    function drawWeather(){ const temps=[82,80,77,74,79,81,83]; spark('weather',temps,'#0ca6e9'); }
+    function drawKPIs(){ spark('kpiRev',[120,132,140,150,158,162,168,174,180,184],'#0ca6e9'); spark('kpiEst',[4,5,6,6,7,8,9,8,9,9],'#f59e0c'); spark('kpiAR',[40,44,46,48,52,51,50,52,51,51],'#f43f5f'); spark('rv1',[120,132,140,150,158,162,168,174,180,184],'#0ca6e9'); spark('rv2',[80,86,92,96,104,110,118,122,128,132],'#16a34a'); spark('rv3',[40,44,46,48,52,51,50,52,51,51],'#f59e0c'); spark('rv4',[11.2,11.4,11.6,11.8,12.0,12.2,12.2,12.4,12.4,12.48],'#94a3b8'); }
+    function drawMarketing(){ const c=document.getElementById('mkt'); const ctx=c.getContext('2d'); const DPR=window.devicePixelRatio||1; const w=c.clientWidth; c.width=w*DPR; c.height=100*DPR; ctx.scale(DPR,DPR); const rows=[{n:'Google',v:38},{n:'LSA',v:22},{n:'Meta',v:26},{n:'Organic',v:8},{n:'Referral',v:30}]; const max=Math.max(...rows.map(r=>r.v)); rows.forEach((r,i)=>{ const x=20+i*60; const bh=(r.v/max)*80; ctx.fillStyle=i%2?'#0ca6e9AA':'#22c55eAA'; ctx.fillRect(x,90-bh,28,bh); ctx.fillStyle='#475569'; ctx.font='11px Inter'; ctx.fillText(r.n,x-2,96); }); }
+
+    // AI chips
+    function renderChips(){ const list=[
+      ['Build schedule','/agent/schedule','Build schedule for next 10 days optimizing travel and weather.'],
+      ['Create Xactimate','/agent/xactimate','Create insurance‑grade PDF for Job #2317; include photos.'],
+      ['Call Jones lead','/agent/call','Call the Jones lead now; handle objections; book Fri 2pm.'],
+      ['Consolidate POs','/agent/purchasing','Consolidate Friday materials into one Beacon PO; nearest branch.'],
+      ['Permit pack','/agent/compliance','Generate permit pack for Dallas; prefill homeowner data.']
+    ];
+      const wrap=$('#chips'); wrap.innerHTML=''; list.forEach(([label,path,desc])=>{ const row=document.createElement('div'); row.className='rounded-lg border border-slate-200 p-2'; row.innerHTML=`<div class='font-semibold text-sm'>${label}</div><div class='text-xs subtle'>${desc}</div><button class='mt-1 btn text-sm' onclick="log('${label} → ${path}')">Run</button>`; wrap.appendChild(row); }); }
+
+    function sendChat(){ const i=$('#chatInput'); if(!i.value.trim()) return; const b=$('#chatBox'); const mine=document.createElement('div'); mine.className='text-sm text-right'; mine.textContent=i.value; b.appendChild(mine); i.value=''; setTimeout(()=>{ const resp=document.createElement('div'); resp.className='text-sm text-slate-600'; resp.textContent='Foreman: queued that for you.'; b.appendChild(resp); b.scrollTop=b.scrollHeight; },500); }
+
+    // Boot
+    function init(){ renderEstimator(); renderPOs(); renderCrews(); setThread(1); drawWeather(); drawKPIs(); drawMarketing(); renderChips(); }
+    init();
+  </script>
+</body>
+</html>
