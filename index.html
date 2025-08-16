@@ -47,6 +47,11 @@
     .btn-danger{background:#f43f5f;border-color:#e11d48;color:#fff}
     .btn-primary{border-color:#0284c7;background:#0ca6e9;color:#fff;box-shadow:0 8px 20px rgba(12,166,233,.25)}
     .btn-primary:hover{background:#0284c7;border-color:#0369a1;transform:translateY(-1px)}
+
+    /* Number sizing clamps so big values never overflow modules */
+    .kpi-num{font-weight:800; letter-spacing:-0.02em; font-size:clamp(1.25rem, 1.2vw + .8rem, 1.9rem);}
+    .rev-num{font-weight:800; letter-spacing:-0.02em; font-size:clamp(1.25rem, 1.2vw + .8rem, 1.75rem);}
+
     /* Dark theme (toggle by body.dark) */
     body.dark{ background:#092034; color:#e6eef8 }
     body.dark header{ background:rgba(9,32,52,.92); border-color:rgba(255,255,255,.12); color:#e6eef8 }
@@ -57,17 +62,23 @@
     body.dark .pill{ background:rgba(193,255,114,.18); color:#d9ff9d }
     body.dark input, body.dark textarea, body.dark select{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18); color:#e6eef8 }
     body.dark .rounded-lg.border, body.dark .border-slate-200{ border-color:rgba(255,255,255,.18)!important }
-    /* tiny rain animation for Weather Guard */
-    .rain-drop{position:absolute; width:2px; height:10px; background:#0ca6e9; opacity:.6; animation:fall 1.8s linear infinite}
-    @keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(190px); opacity:0}}
+
+    /* Drawer (mobile sidebar) */
+    #drawerPanel{transform:translateX(-100%); transition:transform .22s ease}
+    #drawer.open #drawerPanel{transform:translateX(0)}
+
+    /* Weather: gentle rain lines */
+    .rain-drop{position:absolute; width:2px; height:12px; background:#0ca6e9; opacity:.55; animation:fall 1.8s linear infinite}
+    @keyframes fall{0%{transform:translateY(-12px)}100%{transform:translateY(220px); opacity:0}}
   </style>
 </head>
 <body class="bg-slate-50 text-ink">
   <!-- Top Bar -->
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
     <div class="max-w-[1400px] mx-auto px-4 h-14 flex items-center gap-3">
+      <button id="logoBtn" class="md:hidden btn btn-outline">☰</button>
       <div class="flex items-center gap-3 select-none">
-        <img src="https://picsum.photos/seed/rooflogo/56/56" alt="Logo" class="w-9 h-9 rounded-xl object-cover"/>
+        <img src="https://images.unsplash.com/photo-1508385082359-f38ae991e8f2?q=80&w=128&auto=format&fit=crop" alt="Logo" class="w-9 h-9 rounded-xl object-cover"/>
         <div class="leading-tight">
           <div class="font-extrabold tracking-tight text-slate-900 text-lg">Roofers HQ</div>
           <div class="text-slate-500 text-xs">Operator dashboard</div>
@@ -85,13 +96,33 @@
         <button id="exportBtn" class="btn btn-outline">Export</button>
         <button id="themeToggle" class="btn btn-outline">Dark</button>
         <button class="relative btn btn-icon" title="Notifications">🔔<span class="absolute -right-1 -top-1 w-2.5 h-2.5 bg-rose rounded-full ring-2 ring-white"></span></button>
-        <img src="https://picsum.photos/seed/userhq/36/36" class="w-9 h-9 rounded-xl object-cover" alt="User"/>
+        <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=72&auto=format&fit=crop" class="w-9 h-9 rounded-xl object-cover" alt="User"/>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Drawer -->
+  <div id="drawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/30" onclick="toggleDrawer(false)"></div>
+    <aside id="drawerPanel" class="absolute left-0 top-0 bottom-0 w-[260px] bg-white p-3 shadow-xl border-r border-slate-200">
+      <div class="px-2 py-2 flex items-center justify-between"><span class="font-semibold">Menu</span><button class="btn btn-icon" onclick="toggleDrawer(false)">✕</button></div>
+      <nav class="mt-2 space-y-1">
+        <button data-view="overview" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">🏠 Overview</button>
+        <button data-view="leads" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">📇 Leads</button>
+        <button data-view="jobs" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">📋 Jobs</button>
+        <button data-view="calendar" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">🗓 Calendar</button>
+        <button data-view="crews" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">👷‍♂️ Crews</button>
+        <button data-view="materials" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">📦 Materials</button>
+        <button data-view="invoices" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">🧾 Invoices</button>
+        <button data-view="automations" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">⚡ Automations</button>
+        <button data-view="analytics" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">📈 Analytics</button>
+        <button data-view="settings" class="navlink block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-50">⚙️ Settings</button>
+      </nav>
+    </aside>
+  </div>
+
   <div class="max-w-[1400px] mx-auto px-4 py-6 grid grid-cols-1 xl:grid-cols-[220px_1fr_320px] gap-6">
-    <!-- Sidebar -->
+    <!-- Sidebar (desktop only) -->
     <aside class="hidden xl:block">
       <div class="rounded-xl border border-slate-200 bg-white">
         <div class="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
@@ -113,10 +144,10 @@
         <div class="px-4 py-3 border-t border-slate-200">
           <div class="text-xs subtle">Teams on site</div>
           <div class="mt-2 flex -space-x-2">
-            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teama/28/28"/>
-            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teamb/28/28"/>
-            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teamc/28/28"/>
-            <img class="w-7 h-7 rounded-full object-cover" src="https://picsum.photos/seed/teamd/28/28"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=64&auto=format&fit=crop"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://images.unsplash.com/photo-1502767089025-6572583495b0?q=80&w=64&auto=format&fit=crop"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=64&auto=format&fit=crop"/>
+            <img class="w-7 h-7 rounded-full object-cover" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=64&auto=format&fit=crop"/>
           </div>
         </div>
       </div>
@@ -130,7 +161,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="card hoverlift p-4 text-right">
             <div class="flex items-center justify-between"><div class="subtle text-sm">Open Jobs</div><span class="pill bg-brand/10 text-brand">+8% MoM</span></div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">12</div>
+            <div class="kpi-num">12</div>
             <div>
               <div class="flex items-center justify-between text-sm mt-1"><span class="subtle">Avg lead time</span><span class="font-semibold text-slate-900">5d</span></div>
               <div class="mt-2 h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-brand" style="width:62%"></div></div>
@@ -138,7 +169,7 @@
           </div>
           <div class="card hoverlift p-4 text-right">
             <div class="flex items-center justify-between"><div class="subtle text-sm">This Month Revenue</div><span class="pill bg-accent text-slate-900">+12%</span></div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">$184.2k</div>
+            <div class="kpi-num">$184.2k</div>
             <div>
               <canvas id="kpiRev" class="spark mt-1 block"></canvas>
               <div class="flex items-center justify-end text-sm"><span>41 invoices</span></div>
@@ -146,7 +177,7 @@
           </div>
           <div class="card hoverlift p-4 text-right">
             <div class="flex items-center justify-between"><div class="subtle text-sm">Outstanding Estimates</div><span class="pill bg-amber/20 text-amber">5 due</span></div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">9</div>
+            <div class="kpi-num">9</div>
             <div>
               <canvas id="kpiEst" class="spark mt-1"></canvas>
               <div class="flex items-center justify-end text-sm"><span>Avg age&nbsp;<b class="text-slate-900">3d</b></span></div>
@@ -154,7 +185,7 @@
           </div>
           <div class="card hoverlift p-4 text-right">
             <div class="flex items-center justify-between"><div class="subtle text-sm">A/R</div><span class="pill bg-rose/10 text-rose">12 inv</span></div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">$51.7k</div>
+            <div class="kpi-num">$51.7k</div>
             <div>
               <canvas id="kpiAR" class="spark mt-1"></canvas>
               <div class="flex items-center justify-end text-sm"><span>Net 15</span></div>
@@ -170,12 +201,12 @@
               <div class="text-sm subtle">7-day win <span class="font-bold text-slate-900">38%</span></div>
             </div>
             <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
-              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">New</div><div class="text-2xl font-extrabold text-slate-900">27</div></div>
-              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Qualified</div><div class="text-2xl font-extrabold text-slate-900">19</div></div>
-              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Inspection</div><div class="text-2xl font-extrabold text-slate-900">14</div></div>
-              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Quote Sent</div><div class="text-2xl font-extrabold text-slate-900">9</div></div>
-              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Won</div><div class="text-2xl font-extrabold text-slate-900">11</div></div>
-              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Lost</div><div class="text-2xl font-extrabold text-slate-900">5</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">New</div><div class="kpi-num">27</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Qualified</div><div class="kpi-num">19</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Inspection</div><div class="kpi-num">14</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Quote Sent</div><div class="kpi-num">9</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Won</div><div class="kpi-num">11</div></div>
+              <div class="rounded-lg border border-slate-200 p-3"><div class="subtle text-xs">Lost</div><div class="kpi-num">5</div></div>
             </div>
             <div class="mt-3 grid grid-cols-1 gap-2 text-sm">
               <span class="pill bg-slate-100 text-slate-700">3 leads stalled &gt;48h — nudge?</span>
@@ -192,8 +223,8 @@
             </div>
             <div class="mt-3 grid grid-cols-[160px_1fr] gap-3 items-start">
               <div class="grid gap-2">
-                <img src="https://images.unsplash.com/photo-1505843513577-22bb7d21e455?q=80&w=800&auto=format&fit=crop" alt="Roof front" class="w-full h-[110px] object-cover rounded-lg border border-slate-200">
-                <img src="https://images.unsplash.com/photo-1597004895285-58f32b9bc408?q=80&w=800&auto=format&fit=crop" alt="Roof rear" class="w-full h-[110px] object-cover rounded-lg border border-slate-200">
+                <img src="https://images.unsplash.com/photo-1597004895285-58f32b9bc408?q=80&w=800&auto=format&fit=crop" alt="Roof front" class="w-full h-[110px] object-cover rounded-lg border border-slate-200">
+                <img src="https://images.unsplash.com/photo-1596079890684-8a93b7b85a36?q=80&w=800&auto=format&fit=crop" alt="Roof rear" class="w-full h-[110px] object-cover rounded-lg border border-slate-200">
               </div>
               <div>
                 <div class="grid grid-cols-3 gap-2 text-sm mb-2">
@@ -211,7 +242,7 @@
                 </table>
                 <div class="flex flex-wrap justify-between mt-2 text-sm">
                   <div class="subtle">Median time: <b>1m 12s</b> • Accuracy delta: <b>3.4%</b></div>
-                  <div>Total <b class="text-xl font-extrabold">$12,480</b></div>
+                  <div>Total <b class="font-extrabold rev-num">$12,480</b></div>
                 </div>
                 <div class="mt-2 flex flex-wrap gap-2 text-sm">
                   <button class="btn btn-outline" onclick="openModal('Estimate PDF','<p>Placeholder PDF preview.</p>')">Generate PDF</button>
@@ -271,7 +302,7 @@
             </div>
             <div>
               <div class="subtle">AI % complete</div>
-              <div class="text-2xl font-extrabold text-slate-900" id="jsPct">64%</div>
+              <div class="kpi-num" id="jsPct">64%</div>
               <div class="h-2 bg-slate-100 rounded-full overflow-hidden mt-1"><span id="jsBar" style="width:64%" class="block h-full bg-gradient-to-r from-brand to-emerald-500"></span></div>
               <ul class="mt-3 list-disc pl-5 text-slate-600">
                 <li>Alert: <b>Missing permit photo for Job #2317</b></li>
@@ -292,10 +323,10 @@
         <div class="card hoverlift p-4">
           <div class="flex items-center justify-between"><h3 class="font-semibold">Revenue &amp; Cash</h3><div class="subtle">This Month</div></div>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-2 items-start">
-            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Booked</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$184,200</div><canvas id="rv1" class="spark mt-2 block"></canvas></div>
-            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Collected</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$132,480</div><canvas id="rv2" class="spark mt-2 block"></canvas></div>
-            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">A/R</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$51,720</div><canvas id="rv3" class="spark mt-2 block"></canvas></div>
-            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Avg Ticket</div><div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">$12,480</div><canvas id="rv4" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Booked</div><div class="rev-num">$184,200</div><canvas id="rv1" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Collected</div><div class="rev-num">$132,480</div><canvas id="rv2" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">A/R</div><div class="rev-num">$51,720</div><canvas id="rv3" class="spark mt-2 block"></canvas></div>
+            <div class="rounded-lg border border-slate-200 p-3 overflow-hidden"><div class="subtle text-xs">Avg Ticket</div><div class="rev-num">$12,480</div><canvas id="rv4" class="spark mt-2 block"></canvas></div>
           </div>
           <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
             <button class="btn btn-primary btn-lg" onclick="navigate('invoices')">Send invoice</button>
@@ -320,11 +351,15 @@
                 <button class="btn btn-outline w-full" onclick="log('Triggered no-show recovery sequence')">No-show recovery</button>
                 <button class="btn btn-outline w-full" onclick="log('Requested post-install review')">Post-install review</button>
               </div>
+              <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                <button class="btn btn-primary w-full" onclick="generateProposal()">Generate proposal</button>
+                <button class="btn btn-outline w-full" onclick="sendProposal()">Send proposal</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Row: Voice AI (full) -->
+        <!-- Voice AI (full) -->
         <div class="card hoverlift p-4" id="voiceAI">
           <div class="flex items-center justify-between">
             <h3 class="font-semibold">Voice AI Setter / Receptionist</h3>
@@ -387,12 +422,12 @@
           <div class="flex items-center justify-between">
             <h3 class="font-semibold">Weather Guard</h3>
             <div class="flex items-center gap-2 text-sm">
-              <button class="btn btn-outline" onclick="navigate('calendar')">View Calendar</button>
+              <button class="btn btn-outline" onclick="navigate('calendar')">Calendar</button>
               <button class="btn btn-primary" onclick="openModal('Active Jobs Overlay', '<div>Placeholder map/overlay of 7 active jobs with weather badges.</div>')">Jobs Overlay</button>
             </div>
           </div>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-3 items-stretch">
-            <div class="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 h-[180px]">
+            <div class="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 h-[220px]">
               <canvas id="weather" class="absolute inset-0 w-full h-full"></canvas>
               <div id="raindrops"></div>
             </div>
@@ -405,7 +440,7 @@
           </div>
         </div>
 
-        <!-- Compliance / Marketing / Insights (full rows on xl) -->
+        <!-- Compliance / Marketing / Insights (full rows) -->
         <div class="grid grid-cols-12 gap-4">
           <div class="card hoverlift p-4 xl:col-span-12 col-span-12">
             <h3 class="font-semibold">Compliance &amp; Permits</h3>
@@ -569,7 +604,7 @@
 
   <!-- Modal -->
   <div id="modal" class="hidden fixed inset-0 z-50 items-center justify-center">
-    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute inset-0 bg-black/40" onclick="closeModal()"></div>
     <div class="relative w-full max-w-2xl card p-5">
       <div class="flex items-center justify-between mb-2"><div id="modalTitle" class="font-semibold text-lg"></div><button class="btn btn-ghost" onclick="closeModal()">✕</button></div>
       <div id="modalBody" class="text-sm"></div>
@@ -626,15 +661,29 @@
     function log(msg){ console.log('[demo]', msg); }
 
     // Theme toggle
-    $('#themeToggle').addEventListener('click', ()=>{
+    $('#themeToggle')?.addEventListener('click', ()=>{
       document.body.classList.toggle('dark');
       $('#themeToggle').textContent = document.body.classList.contains('dark')? 'Light' : 'Dark';
     });
+
+    // Drawer toggle (mobile)
+    function toggleDrawer(force){
+      const d = $('#drawer');
+      if(force===false){ d.classList.add('hidden'); d.classList.remove('open'); return; }
+      d.classList.toggle('hidden');
+      d.classList.toggle('open');
+    }
+    $('#logoBtn')?.addEventListener('click', ()=> toggleDrawer());
 
     // Sidebar navigation
     $$('#sideNav .nav').forEach(btn=>{
       btn.addEventListener('click', ()=> navigate(btn.getAttribute('data-view')));
     });
+    // Drawer nav buttons
+    $$('#drawer .navlink').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ navigate(btn.getAttribute('data-view')); toggleDrawer(false); });
+    });
+
     function navigate(view){
       const id = `view-${view}`;
       ['overview','leads','jobs','calendar','crews','materials','invoices','automations','analytics','settings'].forEach(v=>{
@@ -656,7 +705,7 @@
     function showToast(){ const t=$('#toast'); t.classList.remove('hidden'); setTimeout(()=> t.classList.add('hidden'), 1800); }
 
     // Export
-    $('#exportBtn').addEventListener('click', ()=>{
+    $('#exportBtn')?.addEventListener('click', ()=>{
       const data = JSON.stringify(state, null, 2);
       const blob = new Blob([data], {type:'application/json'});
       const url = URL.createObjectURL(blob);
@@ -696,10 +745,10 @@
       // temp line
       ctx.beginPath(); temps.forEach((t,i)=>{ const x=(i*(w-40))/(temps.length-1)+20; const y=h-30 - ((t-minT)/(maxT-minT))*70; i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
       ctx.strokeStyle='#0ca6e9'; ctx.lineWidth=2; ctx.stroke();
-      // labels
+      // label
       ctx.fillStyle='#475569'; ctx.font='12px Inter'; ctx.fillText('7‑day outlook', 12, 16);
       // raindrops
-      const drops=$('#raindrops'); drops.innerHTML=''; for(let i=0;i<30;i++){ const d=document.createElement('div'); d.className='rain-drop'; d.style.left=Math.random()*(w-10)+"px"; d.style.top='0px'; d.style.animationDelay=(Math.random()*1.6)+'s'; d.style.opacity=.2+Math.random()*.6; drops.appendChild(d); }
+      const drops=$('#raindrops'); drops.innerHTML=''; for(let i=0;i<36;i++){ const d=document.createElement('div'); d.className='rain-drop'; d.style.left=Math.random()*(w-10)+"px"; d.style.top='0px'; d.style.animationDelay=(Math.random()*1.5)+'s'; d.style.opacity=.2+Math.random()*.6; drops.appendChild(d); }
     }
 
     // Job Site gallery
@@ -719,6 +768,27 @@
     };
     function setThread(id){ const box=$('#thread'); box.innerHTML=''; (threads[id]||[]).forEach(m=>{ const row=document.createElement('div'); row.className='mb-1 flex '+(m.me?'justify-end':''); const b=document.createElement('div'); b.className='px-2 py-1 rounded-md text-sm border '+(m.me?'bg-brand/10 border-brand/30':'bg-slate-50 border-slate-200'); b.textContent=m.t; row.appendChild(b); box.appendChild(row); }); }
     setThread(1);
+
+    function generateProposal(){
+      const proposal = `
+        <div class="space-y-2">
+          <div class="font-semibold text-lg">Proposal — Re-Roof @ 9 Cedar</div>
+          <div class="text-sm subtle">Client: Alex Kim • Est. Total: $12,480 • Valid 30 days</div>
+          <table class="w-full text-sm mt-2">
+            <thead class="text-slate-500"><tr><th class="text-left pb-1 border-b">Item</th><th class="text-right pb-1 border-b">Amount</th></tr></thead>
+            <tbody>
+              <tr><td class="py-1 border-b">Labor</td><td class="py-1 border-b text-right">$5,200</td></tr>
+              <tr><td class="py-1 border-b">Materials — OC Duration (Sierra Gray)</td><td class="py-1 border-b text-right">$6,100</td></tr>
+              <tr><td class="py-1 border-b">Disposal</td><td class="py-1 border-b text-right">$480</td></tr>
+              <tr><td class="py-1 border-b">Overhead &amp; Margin</td><td class="py-1 border-b text-right">$700</td></tr>
+              <tr><td class="py-1 font-semibold">Total</td><td class="py-1 font-semibold text-right">$12,480</td></tr>
+            </tbody>
+          </table>
+          <div class="mt-2 text-sm">Terms: 50% deposit to schedule; balance on completion. Timeline: 1–2 days, weather permitting.</div>
+        </div>`;
+      openModal('Generated Proposal', proposal);
+    }
+    function sendProposal(){ openModal('Send Proposal', '<p>Sending proposal to client email/SMS… (placeholder)</p>'); }
 
     // Voice AI panel
     function toggleLivePanel(){ const p=$('#vaiPanel'); const on=p.classList.contains('hidden'); p.classList.toggle('hidden'); $('#vaiStatus').textContent = on? 'Live' : 'Idle'; if(on){ startTranscript(); fillTransfer(); } }
@@ -806,8 +876,8 @@
         grid.appendChild(cell);
       }
     }
-    $('#prevMonth').addEventListener('click',()=>{ cal.date.setMonth(cal.date.getMonth()-1); renderCalendar(); });
-    $('#nextMonth').addEventListener('click',()=>{ cal.date.setMonth(cal.date.getMonth()+1); renderCalendar(); });
+    $('#prevMonth')?.addEventListener('click',()=>{ cal.date.setMonth(cal.date.getMonth()-1); renderCalendar(); });
+    $('#nextMonth')?.addEventListener('click',()=>{ cal.date.setMonth(cal.date.getMonth()+1); renderCalendar(); });
 
     // Crews page cards
     function renderCrews(){
@@ -827,7 +897,7 @@
     // Invoices cards
     function renderInvoices(){
       const wrap=$('#invoiceList'); wrap.innerHTML='';
-      state.invoices.forEach(inv=>{ const card=document.createElement('div'); card.className='card p-4'; card.innerHTML = `<div class="flex items-center justify-between"><div class="font-semibold">${inv.id}</div><span class="pill ${inv.status==='Paid'?'bg-emerald-100 text-emerald-700':'bg-amber/20 text-amber'}">${inv.status}</span></div><div class="mt-2 text-slate-700">${inv.client}</div><div class="mt-1 text-ink text-xl font-bold">$${fmt(inv.amount)}</div><div class="mt-1 subtle text-sm">Due ${inv.due}</div><div class="mt-3 flex gap-2"><button class="btn btn-outline text-sm" onclick="openModal('Invoice ${inv.id}','<p>Invoice preview placeholder.</p>')">View</button><button class="btn btn-primary text-sm" onclick="log('Reminded ${inv.id}')">Remind</button></div>`; wrap.appendChild(card); });
+      state.invoices.forEach(inv=>{ const card=document.createElement('div'); card.className='card p-4'; card.innerHTML = `<div class="flex items-center justify-between"><div class="font-semibold">${inv.id}</div><span class="pill ${inv.status==='Paid'?'bg-emerald-100 text-emerald-700':'bg-amber/20 text-amber'}">${inv.status}</span></div><div class="mt-2 text-slate-700">${inv.client}</div><div class="mt-1 text-ink font-bold rev-num">$${fmt(inv.amount)}</div><div class="mt-1 subtle text-sm">Due ${inv.due}</div><div class="mt-3 flex gap-2"><button class="btn btn-outline text-sm" onclick="openModal('Invoice ${inv.id}','<p>Invoice preview placeholder.</p>')">View</button><button class="btn btn-primary text-sm" onclick="log('Reminded ${inv.id}')">Remind</button></div>`; wrap.appendChild(card); });
     }
 
     // Automations list
